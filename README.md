@@ -7,6 +7,7 @@ Basic Functionalities:
   
 Additional features we may want to add:
 - Taking picture to auto input item and value.
-- Users can ask for advice on budget
+- Users can ask for advice on budget.
+- Keep track of how much someone owes you back.
 
   
