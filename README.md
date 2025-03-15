@@ -1,4 +1,4 @@
-# Budgetly
+# BudgetAI
 
 Basic Functionalities: 
 - User types in what they spent on (item) and how much it was and it auto categorizes the item.
