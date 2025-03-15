@@ -9,8 +9,10 @@ load_dotenv(find_dotenv())
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
-input = "DoorDash subscription""
-categories = ["Food", "Groceries","Clothing", "Electronics", "Books", "Furniture", "Toys", "Tools", "Health", "Beauty", "Sports", "Automotive", "Music", "Movies", "Games", "Software", "Services", "Other"]
+input = "DoorDash subscription"
+
+categories = ["Housing", "Utilities", "Groceries","Transportation", "Healthcare", "Dining Out", "Entertainment", "Shopping", "Travel", "Debt", "Payments", "Investments", "Education", "Subscriptions", "Personal Care", "Charity", "Childcare & Pets"] 
+
 
 # Send a prompt to the cheapest model (GPT-3.5-Turbo)
 response = client.chat.completions.create(
