@@ -12,9 +12,8 @@ class Transaction(Base):
     Amount = Column(Integer, nullable=False)(Integer, nullable=False)
     CreatedAt = Column(DateTime, default=func.now())
 
-    budget = relationship("Budget", back_populates="transactions")
-
-    @classmethod
+    budget = relationship("Budget", back_populates="
+tr    budget = relansactions")
 
     @classmethod
     def insert_transaction(cls, budget_id, amount):
@@ -30,6 +29,7 @@ class Transaction(Base):
             print(f"Error inserting transaction: {e}")
         finally:
             session.close()
+    @classmethod
     def get_transaction_by_id(cls, transaction_id):
         from db_engine import engine  # Import engine inside the method to avoid circular import
         Session = sessionmaker(bind=engine)
@@ -39,7 +39,7 @@ class Transaction(Base):
         finally:
             session.close()
 
-        @classmethod
+    @cla    ssmethod
     def get_transactions_by_budget_id(cls, budget_id):
     from db_engine import engine  # Import engine inside the method to avoid circular import
         Session = sessionmaker(bind=engine)
