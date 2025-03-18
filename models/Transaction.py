@@ -9,11 +9,10 @@ class Transaction(Base):
     __tablename__ = "transactions"
     TransactionID = Column(Integer, primary_key=True, autoincrement=True)
     BudgetID = Column(Integer, ForeignKey('budgets.BudgetID')) 
-    Amount = Column(Integer, nullable=False)(Integer, nullable=False)
+    Amount = Column(Integer, nullable=False)
     CreatedAt = Column(DateTime, default=func.now())
 
-    budget = relationship("Budget", back_populates="
-tr    budget = relansactions")
+    budget = relationship("Budget", back_populates="transactions")
 
     @classmethod
     def insert_transaction(cls, budget_id, amount):
@@ -29,25 +28,27 @@ tr    budget = relansactions")
             print(f"Error inserting transaction: {e}")
         finally:
             session.close()
+
     @classmethod
     def get_transaction_by_id(cls, transaction_id):
-        from db_engine import engine  # Import engine inside the method to avoid circular import
         Session = sessionmaker(bind=engine)
+        session = Session()
         try:
             transaction = session.query(cls).get(transaction_id)
             return transaction
         finally:
             session.close()
 
-    @cla    ssmethod
+    @classmethod
     def get_transactions_by_budget_id(cls, budget_id):
-    from db_engine import engine  # Import engine inside the method to avoid circular import
         Session = sessionmaker(bind=engine)
+        session = Session()
         try:
             transactions = session.query(cls).filter_by(BudgetID=budget_id).all()
             return transactions
         finally:
             session.close()
+
     @classmethod
     def update_transaction(cls, transaction_id, amount):
         Session = sessionmaker(bind=engine)

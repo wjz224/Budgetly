@@ -24,7 +24,7 @@ class Database:
     def createTables(self):
         # Create all tables after the models are defined
         Base.metadata.create_all(bind=self.engine)
-    def deleteTables(self):
+    def dropTables(self):
         Base.metadata.drop_all(bind=self.engine)
 
 # Initialize Database
