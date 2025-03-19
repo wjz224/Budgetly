@@ -1,11 +1,14 @@
 import unittest
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from sqlalchemy.orm import sessionmaker
 from database import Database
 from models.User import User
 
 class TestUser(unittest.TestCase):
     def setUp(self):
-        self.db = Database("test")
+        self.db = Database()
         self.db.createTables()
         Session = sessionmaker(bind=self.db.engine)
         self.session = Session()

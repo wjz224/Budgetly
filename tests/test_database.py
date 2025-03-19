@@ -1,4 +1,9 @@
+import sys
 import unittest
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from database import Database
 from models.BaseFile import Base
 from sqlalchemy import inspect
@@ -6,7 +11,7 @@ from sqlalchemy import inspect
 class test_database(unittest.TestCase):
     def setUp(self):
         # Initialize the Database
-        self.db = Database("test")
+        self.db = Database()
     
     def tearDown(self):
         # Close the connection after each test
