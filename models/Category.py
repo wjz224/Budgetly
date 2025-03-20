@@ -11,6 +11,7 @@ class Category(Base):
     Name = Column(String, unique=True, nullable=False)
     CreatedAt = Column(DateTime, default=func.now())
     
+    transactions = relationship("Transaction", back_populates="category")
     budgets = relationship("Budget", secondary="budgetcategories", back_populates="categories")
 
     @classmethod

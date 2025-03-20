@@ -27,7 +27,7 @@ class TestBudgetCategory(unittest.TestCase):
             self.test_user = self.session.query(User).filter_by(Email="testuser@example.com").first()
 
             # Insert a test budget for the user
-            Budget.insert_budget(self.test_user.UserID, 1000)
+            Budget.insert_budget(self.test_user.UserID, "test_budget")
             self.test_budget = self.session.query(Budget).filter_by(UserID=self.test_user.UserID).first()
 
             # Insert a test category

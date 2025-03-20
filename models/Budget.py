@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime, ForeignKey
+from sqlalchemy import Column,String, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.sql import func
 from models.BaseFile import Base
@@ -9,7 +9,7 @@ class Budget(Base):
     __tablename__ = "budgets"
     BudgetID = Column(Integer, primary_key=True, autoincrement=True)
     UserID = Column(Integer, ForeignKey('users.UserID'), nullable=False)
-    Amount = Column(Integer, nullable=False)
+    BudgetName = Column(String, nullable=False)
     CreatedAt = Column(DateTime, default=func.now())
 
     user = relationship("User", back_populates="budgets")
@@ -18,14 +18,14 @@ class Budget(Base):
     categories = relationship("Category", secondary="budgetcategories", back_populates="budgets") 
 
     @classmethod
-    def insert_budget(cls, user_id, amount):
+    def insert_budget(cls, user_id, name):
         Session = sessionmaker(bind=engine)
         session = Session()
         try:
-            new_budget = cls(UserID=user_id, Amount=amount)
+            new_budget = cls(UserID=user_id, BudgetName=name)
             session.add(new_budget)
             session.commit()
-            print(f"Budget for user {user_id} with amount {amount} added successfully.")
+            print(f"Budget for user {user_id} with name '{name}' added successfully.")
         except Exception as e:
             session.rollback()
             print(f"Error inserting budget: {e}")
@@ -53,15 +53,15 @@ class Budget(Base):
             session.close()
 
     @classmethod
-    def update_budget(cls, budget_id, amount):
+    def update_budget(cls, budget_id, name):
         Session = sessionmaker(bind=engine)
         session = Session()
         try:
             budget = session.query(cls).get(budget_id)
             if budget:
-                budget.Amount = amount
+                budget.BudgetName = name
                 session.commit()
-                print(f"Budget {budget_id} updated successfully.")
+                print(f"Budget {budget_id} updated successfully with name '{name}'.")
             else:
                 print(f"Budget {budget_id} not found.")
         except Exception as e:
