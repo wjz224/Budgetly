@@ -1,0 +1,14 @@
+{
+  "name": "budgetai",
+  "version": "1.0.0",
+  "description": "BudgetAI Frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Wilson Zheng",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^19.0.0"
+  }
+}
