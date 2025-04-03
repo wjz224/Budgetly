@@ -1,5 +1,6 @@
 import "../css/Login.css"
 import {useState} from 'react'
+import  {Link} from 'react-router-dom'
 function Login(){
     const [formData, setFormData] = useState({
             name: "",
@@ -19,11 +20,7 @@ function Login(){
     return (
         <div className = "Login">
             <main>
-                <section>
-                <header id = "LoginHeader">
-                    <img src="/logo.png" alt="Logo" className="LoginLogo" />
-                    BudgetAI
-                </header>
+                <section className = "LoginSection">
                 <form className = "LoginForm">
                     <div>
                         <label htmlFor="email">Email</label>  
