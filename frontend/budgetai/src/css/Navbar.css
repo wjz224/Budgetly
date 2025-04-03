@@ -1,56 +1,44 @@
-.LoginSection {
-    display: flex;
-    flex-direction: column; /* Stack the header and form vertically */
-    height: 100vh; /* Make the entire Login container fill the viewport height */
-    overflow: hidden; /* Prevent any overflow issues */
-}
-
-.LoginHeader {
+.Navbar {
     display: flex;
     justify-content: space-between; /* Push logo to the left and buttons to the right */
     align-items: center; /* Vertically center the content */
-    height: 10%; /* Header takes up 10% of the viewport height */
-    border: 1px black solid;
+    height: 10%; /* Navbar takes up 10% of the viewport height */
     padding: 0 1rem; /* Add padding for spacing */
-    box-sizing: border-box; /* Include padding in the height calculation */
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-.LoginHeader a {
+.Navbar a {
     display: flex; /* Ensure the Link behaves like a flex container */
     align-items: center; /* Center the image inside the Link */
-    height: 100%; /* Make the Link stretch to the full height of LoginHeader */
     text-decoration: none; /* Remove underline from the Link */
 }
 
-.LoginLogo {
-    height: 50%; /* Make the logo fit within the header */
+.NavbarLogo {
+    height: 3rem; /* Set a fixed height for the logo */
+    width: auto; /* Maintain the aspect ratio */
     margin-right: 0.5rem; /* Add spacing between the logo and the text */
     margin-left: 1rem;
     object-fit: contain; /* Ensure the logo scales proportionally */
 }
 
-.HeaderButtons {
+.NavbarButtons {
     display: flex;
     gap: 1rem; /* Add spacing between the buttons */
 }
 
-.HeaderButton {
-    padding: 0.5rem 1rem;
+.NavbarButton {
+    padding: 0.6rem 1rem;
     background-color: #007bff; /* Blue background */
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 12px;
     text-decoration: none; /* Remove underline */
-    font-size: 1rem;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.HeaderButton:hover {
+.NavbarButton:hover {
     background-color: #0056b3; /* Darker blue on hover */
-}
-
-.LoginForm {
-    flex: 1;
-    border: 1px black solid;
 }
