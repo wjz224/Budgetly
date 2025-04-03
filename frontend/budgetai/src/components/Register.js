@@ -17,27 +17,34 @@ function Register() {
         }));
     };   
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Form submission logic would go here
+        console.log("Form submitted:", formData);
+      };
+
     return (
         <div className="BudgetAI">
 
-            <header className={Register.header}>
-                <div>
-                    <img 
-                        src="/logo.png" 
-                        alt="BudgetAI logo" 
-                        className={Register.logo} 
-                    />
-                </div>  
-                <h1 className={Register.div3}>BudgetAI</h1>
-                <nav className={Register.div4} aria-label="Main navigation"></nav>
+            <header className="header">
+                <div className="logo-container">
+                    <div className="logo">
+                        <img 
+                            src="logo.png" 
+                            alt="BudgetAI logo"
+                            className="logo"
+                        />
+                    </div>  
+                </div>
+                <nav className="div4" aria-label="Main navigation"></nav>
             </header>
 
             
             <main>
-                <section>
-                    <div>
-                        <h2>Sign Up</h2>
-                        <p>Manage your budgets with BudgetAI!</p>
+                <section className="div5">
+                    <div className="div6">
+                        <h2 className="div7">Sign Up</h2>
+                        <p className="div8">Manage your budgets with BudgetAI!</p>
                     </div>
                     
                     <form>
@@ -48,7 +55,7 @@ function Register() {
                                 id="name"
                                 name="name"
                                 placeholder="Enter your name"
-                                className={Register.input}
+                                className="input"
                                 value={formData.name}
                                 onChange={handleInputChange}
                                 required
@@ -62,7 +69,7 @@ function Register() {
                                 id="email"
                                 name="email"
                                 placeholder="Enter your email"
-                                className={Register.input}
+                                className="input"
                                 value={formData.email}
                                 onChange={handleInputChange}
                                 required
@@ -76,7 +83,7 @@ function Register() {
                                 id="password"
                                 name="password"
                                 placeholder="Enter your password"
-                                className={Register.input}
+                                className="input"
                                 value={formData.password}
                                 onChange={handleInputChange}
                                 required
@@ -92,7 +99,7 @@ function Register() {
                                 id="confirmPassword"
                                 name="confirmPassword"
                                 placeholder="Enter your password"
-                                className={Register.input}
+                                className="input"
                                 value={formData.confirmPassword}
                                 onChange={handleInputChange}
                                 required
@@ -100,11 +107,11 @@ function Register() {
                             />
                         </div>
 
-                        <div>
-                            <button type="submit" className={Register.button}>
+                        <div className="div31">
+                            <button type="submit" className="button">
                                 Sign Up
                             </button>
-                            <button type="button" className={Register.button}>
+                            <button type="button" className="button2">
                                 Already have an account? Login
                             </button>
                         </div>
