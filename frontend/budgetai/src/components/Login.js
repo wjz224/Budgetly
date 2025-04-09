@@ -1,6 +1,6 @@
 import "../css/Login.css"
 import {useState} from 'react'
-import  {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 function Login(){
     const [formData, setFormData] = useState({
             name: "",
@@ -10,7 +10,7 @@ function Login(){
         });
     
         const handleInputChange = (e) => {
-            const { name, value } = e.target;
+            const {name, value} = e.target;
             setFormData((prevState) => ({
               ...prevState,
               [name]: value,
@@ -22,13 +22,22 @@ function Login(){
             <main>
                 <section className = "LoginSection">
                 <form className = "LoginForm">
+                    <div className="GoogleSignIn">
+                        <button type="button" className="GoogleButton">
+                            <img
+                                src="/Google-symbol.png"
+                                alt="Google Logo"
+                                className="GoogleLogo"
+                            />
+                            Google
+                        </button>
+                    </div>
                     <div>
-                        <label htmlFor="email">Email</label>  
                         <input
                             type="email"
                             id="email"
                             name="email"
-                            placeholder="Enter your email"
+                            placeholder="Email address"
                             className="LoginEmail"
                             value={formData.email}
                             onChange={handleInputChange}
@@ -36,13 +45,11 @@ function Login(){
                         />
                     </div>
                     <div>
-                        <label>Password</label>
-                        <label htmlFor="password">Password</label>  
                         <input
                             type="password"
                             id="password"
                             name="password"
-                            placeholder="Enter your password"
+                            placeholder="Password"
                             className="LoginPass"
                             value={formData.email}
                             onChange={handleInputChange}
@@ -53,9 +60,7 @@ function Login(){
                         <button type="submit" className="LoginSubmit">
                             Login
                         </button>
-                        <button type="button" className="LoginRegister">
-                            Don't have an account? Register here!
-                        </button>
+                        <Link to="/register" className="SignupButton">Sign Up</Link>
                     </div>
                 </form>
                 </section>
