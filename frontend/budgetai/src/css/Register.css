@@ -43,12 +43,13 @@
   }
 }
 .div5 {
-  justify-content: center;
-  align-items: center;
-  gap: 60px;
-  width: 70%;
-  padding: 60px 40px;
   display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  gap: 20px; 
+  width: 100%; 
+  padding: 20px; 
 }
 @media (width<=991px) {
   .div5 {
@@ -65,7 +66,7 @@
   flex-direction: column;
   flex: 1 0 0;
   align-items: flex-start;
-  gap: 24px;
+  gap: 10px;
   display: flex;
 }
 .div7 {
@@ -75,6 +76,7 @@
   font-size: 40px;
   font-weight: 700;
   line-height: 48px;
+  margin: 0;
 }
 @media (width<=640px) {
   .div7 {
@@ -90,8 +92,8 @@
   line-height: 24px;
 }
 .div31 {
-  flex-direction: row;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
   display: flex;
 }
@@ -116,25 +118,37 @@
     cursor: pointer;
     background-color: #000;
     border: none;
-    border-radius: 8px;
-    width: 240px;
-    padding: 12px;
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
   }
   
   .button2 {
-    color: #000000;
+    color: #000;
     cursor: pointer;
-    background-color: #ffffff;
+    background-color: #fff;
     border: 1px solid #000;
-    border-radius: 8px;
-    width: 400px;
-    padding: 12px;
+  }
+  form {
+    display: flex;
+    flex-direction: column; /* Stack form fields vertically */
+    gap: 15px; /* Add spacing between form fields */
+    width: 100%; /* Full width */
+    max-width: 400px; /* Optional: Limit the form's width */
+    margin: 0 auto; /* Center the form horizontally */
+  }
+
+  .input, .button, .button2 {
+    width: 100%; /* Make all elements take the full width of their container */
+    max-width: 400px; /* Limit the maximum width */
+    padding: 12px; /* Add consistent padding */
     font-family: Roboto;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 24px;
+    border-radius: 12px; /* Consistent border radius */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+  }
+
+  .input {
+    color: #00000080;
+    background-color: #fff;
+    border: 1px solid #0000001a;
   }
