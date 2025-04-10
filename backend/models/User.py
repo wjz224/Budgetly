@@ -12,6 +12,7 @@ class User(Base):
     CreatedAt = Column(DateTime, default=func.now())
 
     budgets = relationship("Budget", back_populates="user")
+    
 
     @classmethod
     def insert_user(cls, email):
