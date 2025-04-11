@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
 from fastapi.requests import Request
+from fastapi.middleware.cors import CORSMiddleware
+
 import os
 from dotenv import load_dotenv, find_dotenv
 
@@ -17,6 +19,7 @@ from models.Transaction import Transaction
 from models.Category import Category
 from models.BudgetCategory import BudgetCategory
 from models.Signup import SignupSchema, LoginSchema
+
 
 load_dotenv(find_dotenv())
 firebase_creds = {
@@ -54,10 +57,44 @@ app = FastAPI(
     description = "Budget Tracker API",
     title = "FireBase Authentication",
 )
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-    
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins. Replace "*" with specific origins for better security.
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, OPTIONS, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
+
+@app.post("/google-signup")
+async def googleSignup(request: Request):  
+    try:
+        # Get the ID Token from the request body
+        body = await request.json()
+        id_token = body.get("idToken")
+
+        if not id_token:
+            raise HTTPException(status_code=400, detail="ID Token is missing")
+        # Verify the ID token using Firebase Admin SDK
+        decoded_token = auth.verify_id_token(id_token)
+        uid = decoded_token["uid"]  
+        email = decoded_token["email"]
+
+        return JSONResponse(
+            status_code = 200,
+            content = {
+                "status": "success",
+                "message": "User signed in successfully",
+                "user_id": uid,
+                "email": email
+            }
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Invalid Google Sign in: {str(e)}")
+        
+    pass
+
 @app.post("/register")
 async def userSignup(user:SignupSchema):
     email = user.email
@@ -90,7 +127,6 @@ async def login_token(user:LoginSchema):
     password = user.password
     try:
         user = firebase.auth().sign_in_with_email_and_password(email = email, password = password)
-
         token = user['idToken']
         
         return JSONResponse(
@@ -112,10 +148,25 @@ async def login_token(user:LoginSchema):
 async def validate_token(request:Request):
     headers = request.headers
     jwt = headers.get('authorization')
+    try:
+        user = auth.verify_id_token(jwt)
+        return JSONResponse(
+            status_code = 200,
+            content = {
+                "status": "success",
+                "message": "Token is valid",
+                "user_id": user["user_id"]
+            }
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code = 400,
+            detail = "Invalid Token"
+        )
 
-    user = auth.verify_id_token(jwt)
-
-    return user["user_id"]
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
 
 if __name__ == "__main__":
