@@ -1,6 +1,7 @@
 import "../css/Login.css"
 import {useState} from 'react'
 import { Link } from "react-router-dom";
+import GoogleSignUp from "./GoogleSignUp";
 function Login(){
     const [formData, setFormData] = useState({
             name: "",
@@ -22,16 +23,7 @@ function Login(){
             <main>
                 <section className = "LoginSection">
                 <form className = "LoginForm">
-                    <div className="GoogleSignIn">
-                        <button type="button" className="GoogleButton">
-                            <img
-                                src="/Google-symbol.png"
-                                alt="Google Logo"
-                                className="GoogleLogo"
-                            />
-                            Google
-                        </button>
-                    </div>
+                    <GoogleSignUp/>
                     <div>
                         <input
                             type="email"
@@ -65,7 +57,6 @@ function Login(){
                 </form>
                 </section>
             </main>
-            
         </div>
     )
 }

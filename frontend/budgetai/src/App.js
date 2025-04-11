@@ -18,8 +18,6 @@ function App() {
           <Route path = "/register">
             <Register />
           </Route>
-
-
         </Switch>
       </div>
     </Router>

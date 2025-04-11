@@ -20,15 +20,11 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         console.log("Form submitted:", formData);
       };
 
     return (
         <div className="BudgetAI">
-
-
-            
             <main>
                 <section className="div5">
                     <div className="div6">
