@@ -32,6 +32,7 @@ class Database:
 # Initialize Database
 db = Database()
 
+db.dropTables()
 # Create tables
 db.createTables()
 

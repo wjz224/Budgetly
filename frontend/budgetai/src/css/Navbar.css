@@ -1,0 +1,49 @@
+.Navbar {
+    display: flex;
+    justify-content: space-between; /* Push logo to the left and buttons to the right */
+    align-items: center; /* Vertically center the content */
+    height: 10%; /* Navbar takes up 10% of the viewport height */
+    padding: 0 1rem; /* Add padding for spacing */
+    margin-bottom: 1rem;
+    position: fixed; /* Make the Navbar fixed at the top */
+    top: 0; /* Position it at the very top of the viewport */
+    left: 0; /* Align it to the left edge */
+    width: 100%;
+    background-color: white;
+}
+
+.Navbar a {
+    display: flex; /* Ensure the Link behaves like a flex container */
+    align-items: center; /* Center the image inside the Link */
+    text-decoration: none; /* Remove underline from the Link */
+}
+
+.NavbarLogo {
+    height: 3rem; /* Set a fixed height for the logo */
+    width: auto; /* Maintain the aspect ratio */
+    margin-right: 0.5rem; /* Add spacing between the logo and the text */
+    margin-left: 1rem;
+    object-fit: contain; /* Ensure the logo scales proportionally */
+}
+
+.NavbarButtons {
+    display: flex;
+    gap: 1rem; /* Add spacing between the buttons */
+    margin-right: 2rem;
+}
+
+.NavbarButton {
+    padding: 0.6rem 1rem;
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    text-decoration: none; /* Remove underline */
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.NavbarButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

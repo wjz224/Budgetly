@@ -8,7 +8,7 @@ from engine import engine
 class Budget(Base):
     __tablename__ = "budgets"
     BudgetID = Column(Integer, primary_key=True, autoincrement=True)
-    UserID = Column(Integer, ForeignKey('users.UserID'), nullable=False)
+    UserID = Column(String, ForeignKey('users.UserID'), nullable=False)
     BudgetName = Column(String, nullable=False)
     CreatedAt = Column(DateTime, default=func.now())
 
