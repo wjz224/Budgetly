@@ -1,31 +1,16 @@
-.BudgetAI .header {
-  background-color: #fff;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 10px;
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
   width: 100%;
-  height: 50px;
-  padding: 15px;
-  display: flex;
-  box-shadow: 0 0 6px #0000001f;
-  z-index: 10;
-  position: relative;
+  box-sizing: border-box;
 }
-@media (width<=640px) {
-  .header {
-    padding: 10px;
-  }
+* {
+  box-sizing: border-box; /* Consistent box-sizing */
 }
 
-.logo-container {
-  display: flex;
-  align-items: center; /* Vertically center the logo and text */
-  gap: 5px; /* Add spacing between the logo and text */
-}
-.logo img {
-  width: 70px;
-  height: auto;
-  object-fit: contain;
+.div1 {
+  margin-top: 10%;
 }
 
 .div3 {
@@ -69,6 +54,8 @@
   gap: 10px;
   display: flex;
 }
+
+
 .div7 {
   color: #000;
   width: 100%;
@@ -98,20 +85,26 @@
   display: flex;
 }
 .input {
-    color: #00000080;
-    background-color: #fff;
-    border: 1px solid #0000001a;
-    border-radius: 6px;
-    align-items: center;
-    gap: 4px;
-    width: 100%;
-    padding: 8px 12px;
-    font-family: Roboto;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    display: flex;
-  }
+  color: #00000080;
+  background-color: #fff;
+  border: 1px solid #0000001a; /* Subtle border */
+  border-radius: 6px;
+  width: 100%;
+  padding: 8px 12px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); /* Subtle shadow around the input */
+  outline: 2px solid rgba(0, 0, 0, 0.1); /* Visible outline */
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, outline 0.3s ease; /* Smooth transition */
+}
+
+.input:focus {
+    border-color: #007bff; /* Highlight border color on focus */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Slight blue glow on focus */
+    outline: none; /* Remove default outline */
+}
 
   .button {
     color: #fff;
@@ -119,6 +112,10 @@
     background-color: #000;
     border: none;
   }
+  .button:hover {
+    background-color: #333; /* Darker black on hover */
+    color: #fff; /* Keep white text */
+}
   
   .button2 {
     color: #000;
@@ -126,6 +123,11 @@
     background-color: #fff;
     border: 1px solid #000;
   }
+  .button2:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+    color: #000; /* Keep black text */
+    border-color: #333; /* Slightly darker border on hover */
+}
   form {
     display: flex;
     flex-direction: column; /* Stack form fields vertically */
@@ -133,6 +135,8 @@
     width: 100%; /* Full width */
     max-width: 400px; /* Optional: Limit the form's width */
     margin: 0 auto; /* Center the form horizontally */
+
+    
   }
 
   .input, .button, .button2 {
@@ -152,3 +156,46 @@
     background-color: #fff;
     border: 1px solid #0000001a;
   }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 10px 0; /* Add spacing around the divider */
+    color: #00000080; /* Subtle text color */
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ccc; /* Line color */
+    margin: 0 10px; /* Spacing between the line and "OR" */
+}
+
+.google-button {
+  background-color: #fff; /* White background */
+  color: #4285f4; /* Google blue text */
+  border: 2px solid #4285f4; /* Blue border */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between the logo and text */
+  font-weight: 600;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.google-button:hover {
+  background-color: #4285f4; /* Blue background on hover */
+  color: #fff; /* White text on hover */
+  border-color: #4285f4; /* Keep the blue border */
+}
+.google-logo {
+  width: 20px; /* Adjust size of the logo */
+  height: 20px;
+  object-fit: contain;
+}

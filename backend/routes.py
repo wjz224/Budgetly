@@ -9,7 +9,7 @@ from dotenv import load_dotenv, find_dotenv
 
 import uvicorn
 import pyrebase
-
+import json
 import firebase_admin
 from firebase_admin import credentials,auth
 
@@ -101,10 +101,21 @@ async def userSignup(user:SignupSchema):
     password = user.password
 
     try:
+        # Check if the user already exists in the database
+        existing_user = User.get_user_by_email(email)
+        if existing_user:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Account already exists for the email {email}"
+            )
+
         user = auth.create_user(
             email = email,
             password = password
         )
+
+        # Add the user to the PostgreSQL database
+        User.insert_user(user.uid, email)
         
         return JSONResponse(
             status_code = 200,
@@ -128,7 +139,6 @@ async def login_token(user:LoginSchema):
     try:
         user = firebase.auth().sign_in_with_email_and_password(email = email, password = password)
         token = user['idToken']
-        
         return JSONResponse(
             status_code = 200,
             content = {
@@ -137,13 +147,17 @@ async def login_token(user:LoginSchema):
                 "token": token
             }
         )
-    except:
+
+    except Exception as e:
+        # Assuming `e` is the HTTPError
+        error_json_str = e.args[1]  # The second argument is the JSON string
+        error_data = json.loads(error_json_str)
+        message = error_data['error']['message']
         raise HTTPException(
-            status_code = 400,
-            detail = "Invalid Credentials"
+            status_code=400,
+            detail= message.replace("_", " ")   
         )
 
-        
 @app.post("/ping")
 async def validate_token(request:Request):
     headers = request.headers

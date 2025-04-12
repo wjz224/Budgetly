@@ -7,7 +7,7 @@ from engine import engine
 # User model
 class User(Base):
     __tablename__ = "users"
-    UserID = Column(Integer, primary_key=True, autoincrement=True)
+    UserID = Column(String, primary_key=True)
     Email = Column(String, unique=True, nullable=False)
     CreatedAt = Column(DateTime, default=func.now())
 
@@ -15,19 +15,25 @@ class User(Base):
     
 
     @classmethod
-    def insert_user(cls, email):
+    def insert_user(cls, userID, email):
         Session = sessionmaker(bind=engine)
         session = Session()
         try:
-            # Check if the user already exists
+            # Check if the user with email already exists
+            print("inserting user...")
             existing_user = session.query(cls).filter_by(Email=email).first()
             if existing_user:
-                print(f"User with email {email} already exists.")
-            else:
-                new_user = cls(Email=email)
-                session.add(new_user)
-                session.commit()
-                print(f"User {email} added successfully.")
+                raise Exception(f"User with email {email} already exists.")
+
+            # Check if the user id already exists
+            existing_user = session.query(cls).filter_by(UserID= userID).first()
+            if existing_user:
+                raise Exception(f"User with email {userID} already exists.")
+       
+            new_user = cls(UserID = userID, Email=email)
+            session.add(new_user)
+            session.commit()
+            print(f"UserID: {userID} Email: {email} added successfully.")    
         except Exception as e:
             session.rollback()
             print(f"Error inserting user: {e}")

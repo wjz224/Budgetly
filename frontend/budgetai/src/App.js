@@ -4,23 +4,24 @@ import Home from './components/Home'
 import Login from './components/Login'
 import Register from './components/Register'
 import Navbar from './components/Navbar'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-function App() {
+import Main from './components/Main'
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import { CookiesProvider } from 'react-cookie'; // Import CookiesProvider
 
+function App() {
   return (
-    <Router>
-      <div className="App">
-        <Navbar/>
-        <Switch>
-          <Route path = "/login">
-            <Login />
-          </Route>
-          <Route path = "/register">
-            <Register />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <CookiesProvider> {/* Wrap the app in CookiesProvider */}
+      <Router>
+        <div className="App">
+          <Navbar />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/main" element={<Main />} />
+          </Routes>
+        </div>
+      </Router>
+    </CookiesProvider>
   );
 }
 
