@@ -66,6 +66,9 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all HTTP methods (GET, POST, OPTIONS, etc.)
     allow_headers=["*"],  # Allows all headers
 )
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
 @app.post("/google-signup")
 async def googleSignup(request: Request):  
@@ -81,18 +84,22 @@ async def googleSignup(request: Request):
         uid = decoded_token["uid"]  
         email = decoded_token["email"]
 
+        # Check if the user already exists in the database
+        existing_user = User.get_user_by_email(email)
+        if existing_user is None:
+            # If the user does not exist, create a new user in the database.
+            User.insert_user(uid, email)
+        
         return JSONResponse(
             status_code = 200,
             content = {
                 "status": "success",
                 "message": "User signed in successfully",
-                "user_id": uid,
-                "email": email
+                "token": id_token
             }
         )
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Invalid Google Sign in: {str(e)}")
-        
     pass
 
 @app.post("/register")
@@ -162,14 +169,13 @@ async def login_token(user:LoginSchema):
 async def validate_token(request:Request):
     headers = request.headers
     jwt = headers.get('authorization')
-    try:
+    try:    
         user = auth.verify_id_token(jwt)
         return JSONResponse(
             status_code = 200,
             content = {
                 "status": "success",
-                "message": "Token is valid",
-                "user_id": user["user_id"]
+                "message": "Token is valid"
             }
         )
     except Exception as e:
@@ -178,9 +184,6 @@ async def validate_token(request:Request):
             detail = "Invalid Token"
         )
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
 
 
 if __name__ == "__main__":

@@ -1,0 +1,26 @@
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.dashboard-sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-nav-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dashboard-nav-item {
+    margin: 10px 0;
+    cursor: pointer;
+}
+.dashboard-main-content {
+    flex: 1;
+    padding: 20px;
+}

@@ -1,9 +1,33 @@
-import "../css/Register.css"
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import "../css/Register.css";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import GoogleSignUp from "./GoogleSignUp";
+import { useCookies } from "react-cookie";
+import checkAuth from "../utils/checkAuth"; // Import the checkAuth function
 
 function Register() {
+    const navigate = useNavigate();
+    const [cookies, setCookie] = useCookies(["authorization"]);
+    const [isLoading, setIsLoading] = useState(true); // Add a loading state
+
+    // Check authentication status on component mount
+    useEffect(() => {
+        const verifyAuth = async () => {
+            const isAuthenticated = await checkAuth(cookies.authorization); // Call checkAuth with the cookie
+            if (isAuthenticated) {
+                navigate("/main"); // Redirect to main page if authenticated
+            } else {
+                setIsLoading(false); // Stop loading if not authenticated
+            }
+        };
+
+        if (cookies.authorization !== undefined) {
+            verifyAuth();
+        } else {
+            setIsLoading(false); // Stop loading if no cookie is present
+        }
+    }, [cookies.authorization, navigate]);
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -17,21 +41,23 @@ function Register() {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevState) => ({
-          ...prevState,
-          [name]: value,
+            ...prevState,
+            [name]: value,
         }));
-    };   
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true); // Start loading when the form is submitted
 
         if (formData.password !== formData.confirmPassword) {
             setErrorMessage("Passwords do not match.");
+            setIsLoading(false); // Stop loading if validation fails
             return;
         }
 
         try {
-            // need to change this link for deployment
+            // Send registration data to the backend
             const response = await fetch("http://127.0.0.1:8000/register", {
                 method: "POST",
                 headers: {
@@ -55,8 +81,15 @@ function Register() {
         } catch (error) {
             setErrorMessage("An error occurred. Please try again.");
             setSuccessMessage("");
+        } finally {
+            setIsLoading(false); // Stop loading after the request is complete
         }
-      };
+    };
+
+    // Show a loading spinner or placeholder while checking authentication or submitting the form
+    if (isLoading) {
+        return <div>Loading...</div>; // Replace with a spinner or loading animation if desired
+    }
 
     return (
         <div className="BudgetAI">
@@ -66,7 +99,7 @@ function Register() {
                         <h2 className="div7">Sign Up</h2>
                         <p className="div8">Manage your budgets with BudgetAI!</p>
                     </div>
-                    
+
                     <form onSubmit={handleSubmit}>
                         <GoogleSignUp className="googleButton" />
 
@@ -75,7 +108,7 @@ function Register() {
                         </div>
 
                         <div>
-                            <label htmlFor="email"></label>  
+                            <label htmlFor="email"></label>
                             <input
                                 type="email"
                                 id="email"
@@ -89,7 +122,7 @@ function Register() {
                         </div>
 
                         <div>
-                            <label htmlFor="password"></label>  
+                            <label htmlFor="password"></label>
                             <input
                                 type="password"
                                 id="password"
@@ -104,7 +137,7 @@ function Register() {
                         </div>
 
                         <div>
-                            <label htmlFor="confirmPassword"></label>  
+                            <label htmlFor="confirmPassword"></label>
                             <input
                                 type="password"
                                 id="confirmPassword"
@@ -131,12 +164,10 @@ function Register() {
                         </div>
                     </form>
                 </section>
-            </main> 
+            </main>
         </div>
-
-
     );
 }
 
-export default Register
+export default Register;
 
