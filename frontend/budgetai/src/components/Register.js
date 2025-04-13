@@ -1,4 +1,5 @@
 import "../css/Register.css";
+import "../css/LoginShared.css"
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleSignUp from "./GoogleSignUp";
@@ -9,6 +10,12 @@ function Register() {
     const navigate = useNavigate();
     const [cookies, setCookie] = useCookies(["authorization"]);
     const [isLoading, setIsLoading] = useState(true); // Add a loading state
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+    const [messages, setMessages] = useState({ success: "", error: "" });
 
     // Check authentication status on component mount
     useEffect(() => {
@@ -28,22 +35,9 @@ function Register() {
         }
     }, [cookies.authorization, navigate]);
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-    });
-
-    const [successMessage, setSuccessMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
+        setFormData((prevState) => ({ ...prevState, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
@@ -51,7 +45,7 @@ function Register() {
         setIsLoading(true); // Start loading when the form is submitted
 
         if (formData.password !== formData.confirmPassword) {
-            setErrorMessage("Passwords do not match.");
+            setMessages({ error: "Passwords do not match.", success: "" });
             setIsLoading(false); // Stop loading if validation fails
             return;
         }
@@ -60,27 +54,22 @@ function Register() {
             // Send registration data to the backend
             const response = await fetch("http://127.0.0.1:8000/register", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     email: formData.email,
                     password: formData.password,
                 }),
             });
 
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
-                setSuccessMessage(data.message);
-                setErrorMessage("");
+                setMessages({ success: data.message, error: "" });
             } else {
-                const errorData = await response.json();
-                setErrorMessage(errorData.detail || "Registration failed.");
-                setSuccessMessage("");
+                setMessages({ error: data.detail || "Registration failed.", success: "" });
             }
+
         } catch (error) {
-            setErrorMessage("An error occurred. Please try again.");
-            setSuccessMessage("");
+            setMessages({ error: "An error occurred. Please try again.", success: "" });
         } finally {
             setIsLoading(false); // Stop loading after the request is complete
         }
@@ -93,11 +82,10 @@ function Register() {
 
     return (
         <div className="BudgetAI">
-            <main className="div1">
-                <section className="div5">
+            <main>
+                <section className="section">
                     <div className="div6">
                         <h2 className="div7">Sign Up</h2>
-                        <p className="div8">Manage your budgets with BudgetAI!</p>
                     </div>
 
                     <form onSubmit={handleSubmit}>
@@ -108,7 +96,6 @@ function Register() {
                         </div>
 
                         <div>
-                            <label htmlFor="email"></label>
                             <input
                                 type="email"
                                 id="email"
@@ -122,7 +109,6 @@ function Register() {
                         </div>
 
                         <div>
-                            <label htmlFor="password"></label>
                             <input
                                 type="password"
                                 id="password"
@@ -137,7 +123,6 @@ function Register() {
                         </div>
 
                         <div>
-                            <label htmlFor="confirmPassword"></label>
                             <input
                                 type="password"
                                 id="confirmPassword"
@@ -151,11 +136,11 @@ function Register() {
                             />
                         </div>
 
-                        {errorMessage && <p className="error">{errorMessage}</p>}
-                        {successMessage && <p className="success">{successMessage}</p>}
+                        {messages.error && <p className="error">{messages.error}</p>}
+                        {messages.success && <p className="success">{messages.success}</p>}
 
-                        <div className="div31">
-                            <button type="submit" className="button">
+                        <div className="buttons">
+                            <button type="submit" className="button1">
                                 Sign Up
                             </button>
                             <Link to="/login" className="button2">

@@ -1,0 +1,139 @@
+/* Buttons */
+.button1 {
+    color: #fff;
+    cursor: pointer;
+    background-color: #000;
+    border: none;
+    padding: 12px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-family: Roboto, sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.button1:hover {
+    background-color: #333;
+}
+
+.button2 {
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 12px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-family: Roboto, sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.button2:hover {
+    background-color: #f0f0f0;
+}
+
+/* Inputs */
+.input {
+    color: #00000080;
+    background-color: #fff;
+    border: 1px solid #0000001a;
+    border-radius: 16px;
+    width: 100%;
+    padding: 8px 12px;
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    outline: none;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Dividers */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 5px 0;
+    color: #00000080;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+    margin: 0 10px;
+}
+
+.GoogleSignIn {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+}
+
+.GoogleButton {
+    width: 100%; /* Full width like other buttons */
+    max-width: 400px; /* Limit the maximum width */
+    padding: 12px; /* Consistent padding */
+    font-family: Roboto, sans-serif; /* Match font family */
+    font-size: 16px; /* Match font size */
+    font-weight: 400; /* Match font weight */
+    line-height: 24px; /* Match line height */
+    border-radius: 16px; /* Consistent border radius */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    color: #000; 
+    background-color: #fff; /* White background */
+    border: 1px solid #0000001a; /* Match border style */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between the Google logo and text */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.GoogleButton:hover {
+    background-color: #f5f5f5; /* Slightly darker background on hover */
+}
+
+.GoogleLogo {
+    width: 20px; /* Adjust size of the Google logo */
+    height: 20px;
+    object-fit: contain;
+}
+
+/* form styles */
+form {
+    display: flex;
+    flex-direction: column; /* Stack form fields vertically */
+    gap: 15px; /* Add spacing between form fields */
+    width: 100%; /* Full width */
+    max-width: 400px; /* Optional: Limit the form's width */
+    margin: 0 auto; /* Center the form horizontally */
+}
+
+.input, .button1, .button2 {
+    width: 100%; /* Make all elements take the full width of their container */
+    max-width: 400px; /* Limit the maximum width */
+    padding: 12px; /* Add consistent padding */
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+  
+.input {
+    color: #00000080;
+    background-color: #fff;
+    border: 1px solid #0000001a;
+}
+.buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    display: flex;
+}

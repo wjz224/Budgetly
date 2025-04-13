@@ -25,7 +25,7 @@ class TestTransaction(unittest.TestCase):
 
         # Insert a test user, budget, and category into the database
         print("Inserting test data...")
-        User.insert_user("testuser@example.com")
+        User.insert_user("1","testuser@example.com")
         self.test_user = self.session.query(User).filter_by(Email="testuser@example.com").first()
 
         Budget.insert_budget(self.test_user.UserID, "Test Budget")
