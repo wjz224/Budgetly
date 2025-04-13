@@ -10,7 +10,6 @@ class User(Base):
     UserID = Column(String, primary_key=True)
     Email = Column(String, unique=True, nullable=False)
     CreatedAt = Column(DateTime, default=func.now())
-
     budgets = relationship("Budget", back_populates="user")
     
 

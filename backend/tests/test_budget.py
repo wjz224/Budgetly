@@ -18,7 +18,7 @@ class TestBudget(unittest.TestCase):
         self.session = Session()
 
         # Insert a test user into the database using insert_user method
-        User.insert_user("testuser@example.com")
+        User.insert_user("1","testuser@example.com")
         self.test_user = self.session.query(User).filter_by(Email="testuser@example.com").first()
 
     def tearDown(self):

@@ -1,0 +1,160 @@
+/* form and section */
+.section {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+    margin-top: -0.625rem; /* -10px */
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    margin-top: -3.125rem; /* -50px */
+}
+
+/* logo */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0; /* No spacing below the logo */
+}
+
+.logo {
+    width: 5rem; /* 80px */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Buttons */
+.button1 {
+    color: #fff;
+    cursor: pointer;
+    background-color: #25A55F;
+    border: none;
+    padding: 0.75rem; /* 12px */
+    border-radius: 1rem; /* 16px */
+    font-size: 1rem; /* 16px */
+    font-family: Roboto, sans-serif;
+    transition: background-color 0.3s ease;
+}
+.button1:hover {
+    background-color: #333;
+}
+.button2 {
+    color: #000;
+    background-color: #fff;
+    border: 0.0625rem solid #000; /* 1px */
+    padding: 0.75rem; /* 12px */
+    border-radius: 1rem; /* 16px */
+    font-size: 1rem; /* 16px */
+    font-family: Roboto, sans-serif;
+    transition: background-color 0.3s ease;
+}
+.button2:hover {
+    background-color: #f0f0f0;
+}
+
+/* Inputs */
+.input {
+    color: #00000080;
+    background-color: #fff;
+    border: 0.0625rem solid #0000001a; /* 1px */
+    border-radius: 1rem; /* 16px */
+    width: 100%;
+    padding: 0.5rem 0.75rem; /* 8px 12px */
+    font-family: Roboto, sans-serif;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+    outline: none;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0.5rem rgba(0, 123, 255, 0.5); /* 8px */
+}
+
+/* Dividers */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 0.3125rem 0; /* 5px */
+    color: #00000080;
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 0.0625rem solid #ccc; /* 1px */
+    margin: 0 0.625rem; /* 10px */
+}
+
+.GoogleSignIn {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+}
+
+.GoogleButton {
+    width: 100%; /* Full width like other buttons */
+    max-width: 25rem; /* 400px */
+    padding: 0.75rem; /* 12px */
+    font-family: Roboto, sans-serif; /* Match font family */
+    font-size: 1rem; /* 16px */
+    font-weight: 400; /* Match font weight */
+    line-height: 1.5rem; /* 24px */
+    border-radius: 1rem; /* 16px */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    color: #000;
+    background-color: #fff; /* White background */
+    border: 0.0625rem solid #0000001a; /* Match border style */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; /* 8px */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.GoogleButton:hover {
+    background-color: #f5f5f5; /* Slightly darker background on hover */
+}
+
+.GoogleLogo {
+    width: 1.25rem; /* 20px */
+    height: 1.25rem; /* 20px */
+    object-fit: contain;
+}
+
+/* form styles */
+form {
+    display: flex;
+    flex-direction: column; /* Stack form fields vertically */
+    gap: 0.9375rem; /* 15px */
+    width: 100%; /* Full width */
+    max-width: 25rem; /* 400px */
+    margin: 0 auto; /* Center the form horizontally */
+}
+
+.input, .button1, .button2 {
+    width: 100%; /* Make all elements take the full width of their container */
+    max-width: 25rem; /* 400px */
+    padding: 0.75rem; /* 12px */
+    font-family: Roboto;
+    font-size: 1rem; /* 16px */
+    font-weight: 400;
+    line-height: 1.5rem; /* 24px */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+.buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem; /* 10px */
+    display: flex;
+}

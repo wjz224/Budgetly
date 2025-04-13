@@ -1,0 +1,36 @@
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.dashboard-sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-nav-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dashboard-nav-item {
+    display: flex;
+    align-items: center; /* Align icons and text vertically */
+    margin: 40px 0; /* Add a bigger gap between items */
+    cursor: pointer;
+    text-align: left; /* Align text to the left */
+}
+
+.dashboard-icon {
+    margin-right: 15px; /* Add spacing between the icon and text */
+    font-size: 1.5em; /* Make the icons larger */
+}
+
+.dashboard-main-content {
+    flex: 1;
+    padding: 20px;
+}
