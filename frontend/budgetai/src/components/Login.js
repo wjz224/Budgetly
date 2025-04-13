@@ -88,9 +88,13 @@ function Login() {
     return (
         <div className="Login">
             <main>
-                <section className="LoginSection">
-                    <form className="LoginForm">
-                        <h2 className="div7">Log in</h2>
+                <section className="section">
+                    <form className="form">
+                        <div className="logo-container">
+                            <img src="/logo.png" alt="Logo" className="logo" />
+                        </div>
+                        
+                        <h2 className="div7">Log in to BudgetAI</h2>
                         <GoogleSignUp setErrorMessage={setErrorMessage} setCookie={setCookie} />
 
                         <div className="divider">

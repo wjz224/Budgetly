@@ -84,11 +84,12 @@ function Register() {
         <div className="BudgetAI">
             <main>
                 <section className="section">
-                    <div className="div6">
-                        <h2 className="div7">Sign Up</h2>
-                    </div>
+                    <form className="form" onSubmit={handleSubmit}>
+                        <div className="logo-container">
+                            <img src="/logo.png" alt="Logo" className="logo" />
+                        </div>
 
-                    <form onSubmit={handleSubmit}>
+                        <h2 className="div7">Create your account</h2>
                         <GoogleSignUp className="googleButton" />
 
                         <div className="divider">
