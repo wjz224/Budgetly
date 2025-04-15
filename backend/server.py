@@ -6,6 +6,14 @@ from routes.auth.login import router as login_router
 from routes.auth.valid_user import router as valid_user_router
 from route_utilities.initialize_firebase import initialize_firebase
 
+# Load Models:
+from models.BaseFile import Base
+from models.User import User
+from models.Budget import Budget
+from models.Transaction import Transaction
+from models.Category import Category
+from models.BudgetCategory import BudgetCategory
+
 # Initialize Firebase
 initialize_firebase()
 

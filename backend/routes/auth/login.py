@@ -30,8 +30,10 @@ async def login_token(user: LoginSchema):
         # If it succeeds, it will return a user object containing the user's information.
         # Extract the idToken which is the JWT/sessionToken for the users session 
         token = user["idToken"]
+        refresh_token = user["refreshToken"]
+        
         # Return a JSON response with the token and a success message.
-        return JSONResponse(
+        response = JSONResponse(
             status_code=200,
             content={
                 "status": "success",
@@ -39,6 +41,16 @@ async def login_token(user: LoginSchema):
                 "token": token,
             },
         )
+        
+        response.set_cookie(
+            key="refreshToken",
+            value=refresh_token,
+            httponly=True,
+            secure=True,  # Set to True if using HTTPS
+            samesite="None",  # Adjust according to your needs
+        )
+
+        return response
     except Exception as e:
         # If there is an error with the users login, return the message by parsing the error message from Firebase.
         # Since the except is a HTTPException, grab the first argument which is the error message in JSON

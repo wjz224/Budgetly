@@ -2,23 +2,20 @@ import React from 'react';
 import Sidebar from './Sidebar';
 import '../css/Dashboard.css';
 
-function Dashboard() {
-    const handleSignOut = () => {
-        // Add sign-out logic here
-        console.log("User signed out");
-    };
+function Budgets() {
 
     return (
         <div className="dashboard-container">
-            <Sidebar onSignOut={handleSignOut} />
+            <Sidebar />
             <main className="dashboard-main-content">
                 <div className="page-header">
-                    <h2>Dashboard</h2>
+                    <h2>Budgets</h2>
                 </div>
-                <p>Welcome to your dashboard!</p>
+                <div className="page-header"></div>
+                <p>hello</p>
             </main>
         </div>
     );
 }
 
-export default Dashboard;
+export default Budgets;
