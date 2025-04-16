@@ -25,7 +25,7 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://127.0.0.1:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -40,4 +40,11 @@ app.include_router(valid_user_router,  tags=["Validate User"])
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("server:app", reload=True)
+    uvicorn.run(
+        "server:app",
+        host="127.0.0.1",  # Use a valid hostname or IP address
+        port=8000,         # Specify the port
+        reload=True,       # Enable auto-reload for development
+        ssl_keyfile="../key.pem",  # Path to your private key
+        ssl_certfile="../cert.pem"  # Path to your certificate
+    )

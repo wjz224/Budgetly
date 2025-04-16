@@ -5,7 +5,7 @@ import sys
 backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(backend_dir)
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response
 from fastapi.responses import JSONResponse
 from models.Signup import LoginSchema  
 # Import the firebase object to access our pyrebase firebase object
@@ -29,16 +29,16 @@ async def login_token(user: LoginSchema):
         user = firebase.auth().sign_in_with_email_and_password(email=email, password=password)
         # If it succeeds, it will return a user object containing the user's information.
         # Extract the idToken which is the JWT/sessionToken for the users session 
-        token = user["idToken"]
+        accessToken = user["idToken"]
         refresh_token = user["refreshToken"]
-        
+        print(refresh_token)
         # Return a JSON response with the token and a success message.
         response = JSONResponse(
             status_code=200,
             content={
                 "status": "success",
                 "message": "User signed in successfully",
-                "token": token,
+                "accessToken": accessToken,
             },
         )
         
@@ -48,18 +48,23 @@ async def login_token(user: LoginSchema):
             httponly=True,
             secure=True,  # Set to True if using HTTPS
             samesite="None",  # Adjust according to your needs
+            path="/",  # Make the cookie available to all routes
+            domain="127.0.0.1",  # Adjust for your domain
+            max_age=7 * 24 * 60 * 60,  # Cookie valid for 7 days
         )
-
+        
         return response
     except Exception as e:
-        # If there is an error with the users login, return the message by parsing the error message from Firebase.
-        # Since the except is a HTTPException, grab the first argument which is the error message in JSON
+        # If there is an error with the user's login, return a JSON response with the error message.
         error_json_str = e.args[1]
         # Then load it as a JSON
         error_data = json.loads(error_json_str)
-        # Then extract the message and return it as an HTTPException with a 400 status code.
+        # Then extract the message and return it as a JSON response.
         message = error_data["error"]["message"]
-        raise HTTPException(
+        return JSONResponse(
             status_code=400,
-            detail=message.replace("_", " "),
+            content={
+                "status": "error",
+                "message": message.replace("_", " "),
+            },
         )

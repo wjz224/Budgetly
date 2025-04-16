@@ -14,7 +14,7 @@ function GoogleSignUp({setErrorMessage, setCookie}){
             const idToken = await result.user.getIdToken(); // Get the Google ID token
      
             // Send the ID token to backend
-            const response = await fetch("http://127.0.0.1:8000/google-signup", {
+            const response = await fetch("https://127.0.0.1:8000/google-signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
