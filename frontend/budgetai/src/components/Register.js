@@ -52,7 +52,7 @@ function Register() {
 
         try {
             // Send registration data to the backend
-            const response = await fetch("http://127.0.0.1:8000/register", {
+            const response = await fetch("https://127.0.0.1:8000/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

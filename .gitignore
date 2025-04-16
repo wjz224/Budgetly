@@ -3,3 +3,8 @@ __pycache__
 ./models/__pycache__
 ./tests/__pycache__
 package-lock.json
+cert.pem
+install-key.pem
+install.pem
+key.pem
+

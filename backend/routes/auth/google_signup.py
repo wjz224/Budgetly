@@ -31,12 +31,14 @@ async def google_signup(request: Request):
         decoded_token = auth.verify_id_token(id_token)
         uid = decoded_token["uid"]
         email = decoded_token["email"]
+       
         # Check if the user exists in our users database
         # If it does not exist, then this is a signup.
         existing_user = User.get_user_by_email(email)
         if existing_user is None:
             # Therefore we need to insert the user into our database.
             User.insert_user(uid, email)
+        
         # Return the id_token as the response to the client to save in their cookies.
         return JSONResponse(
             status_code=200,

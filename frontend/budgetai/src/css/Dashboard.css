@@ -32,5 +32,61 @@
 
 .dashboard-main-content {
     flex: 1;
-    padding: 20px;
+}
+
+.user-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.user-icon {
+    font-size: 4rem;
+    color: #555;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1000;
+}
+
+.user-dropdown button {
+    background: none;
+    border: none;
+    color: #333;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.user-dropdown button:hover {
+    background-color: #f0f0f0;
+}
+
+.page-header {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd; /* Add a bottom border as the divider */
+    text-align: left;
+    padding-left: 20px;;
+}
+
+.dashboard-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit text color */
+    display: flex; /* Align icon and text */
+    align-items: center;
+}
+
+.dashboard-link:hover {
+    color: #007bff; /* Change color on hover */
 }

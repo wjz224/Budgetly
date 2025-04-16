@@ -18,6 +18,7 @@ function Login() {
             const isAuthenticated = await checkAuth(cookies.authorization); // Call checkAuth with the cookie
             if (isAuthenticated) {
                 navigate("/main"); // Redirect to main page if authenticated
+                console.log("Authenticated, redirecting to main page...");
             } else {
                 setIsLoading(false); // Stop loading if not authenticated
             }
@@ -46,8 +47,9 @@ function Login() {
     const signInWithPassAndEmail = async (e) => {
         e.preventDefault(); // Prevent form submission reload
         try {
-            const response = await fetch("http://127.0.0.1:8000/login", {
+            const response = await fetch("https://127.0.0.1:8000/login", {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -60,12 +62,12 @@ function Login() {
             if (response.ok) {
                 const data = await response.json();
                 setErrorMessage("");
-
+                console.log(data)
                 // Store the JWT token as a cookie
-                setCookie("authorization", data.token, {
+                setCookie("authorization", data.accessToken, {
                     path: "/", // Cookie is accessible across the entire site
                     maxAge: 7 * 24 * 60 * 60, // Cookie valid for 7 days
-                    secure: false, // Set to true if using HTTPS
+                    secure: true, // Set to true if using HTTPS
                     sameSite: "strict", // Prevent CSRF attacks
                 });
 
