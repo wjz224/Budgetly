@@ -2,13 +2,16 @@ import "../css/Login.css"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import app from "../firebase/firebaseConfig"; 
 import {useNavigate} from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
 function GoogleSignUp({setErrorMessage, setCookie}){
     const navigate = useNavigate();
-    const signUpWithGoogle = async () => {
+
+    const signUpWithGoogle = async (event) => {
+        event.preventDefault(); // Prevent default form submission behavior
         try {
             const result = await signInWithPopup(auth, provider);
             const idToken = await result.user.getIdToken(); // Get the Google ID token

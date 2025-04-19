@@ -3,19 +3,24 @@ import "../css/LoginShared.css"
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleSignUp from "./GoogleSignUp";
-import { useCookies } from "react-cookie";
 import checkAuth from "../utils/checkAuth";
-
+import {useAuth} from "./AuthContext"; 
 function Login() {
     const navigate = useNavigate();
+    const {accessToken, loading} = useAuth(); // Access the accessToken from AuthContext
     const [errorMessage, setErrorMessage] = useState("");
-    const [cookies, setCookie] = useCookies(["authorization"]); // Access cookies
     const [isLoading, setIsLoading] = useState(true); // Add a loading state
-
+    
     // Check authentication status on component mount
     useEffect(() => {
         const verifyAuth = async () => {
-            const isAuthenticated = await checkAuth(cookies.authorization); // Call checkAuth with the cookie
+            if (!accessToken) {
+                if (!loading) {
+                    setIsLoading(false); // Stop loading if no access token
+                }
+                return;
+            }
+            const isAuthenticated = await checkAuth(accessToken); // Call checkAuth with the cookie
             if (isAuthenticated) {
                 navigate("/main"); // Redirect to main page if authenticated
                 console.log("Authenticated, redirecting to main page...");
@@ -23,13 +28,13 @@ function Login() {
                 setIsLoading(false); // Stop loading if not authenticated
             }
         };
-
-        if (cookies.authorization !== undefined) {
+        if (loading !== undefined && !loading){
+            console.log("Loading", loading)
             verifyAuth();
-        } else {
-            setIsLoading(false); // Stop loading if no cookie is present
         }
-    }, [cookies.authorization, navigate]);
+
+    }, [accessToken, loading, navigate]); // Add accessToken and navigate to dependencies
+
 
     const [formData, setFormData] = useState({
         email: "",
@@ -47,6 +52,7 @@ function Login() {
     const signInWithPassAndEmail = async (e) => {
         e.preventDefault(); // Prevent form submission reload
         try {
+            console.log("Email:", formData.email, "Password:", formData.password); // Debugging
             const response = await fetch("https://127.0.0.1:8000/login", {
                 method: "POST",
                 credentials: "include",
@@ -62,22 +68,13 @@ function Login() {
             if (response.ok) {
                 const data = await response.json();
                 setErrorMessage("");
-                console.log(data)
-                // Store the JWT token as a cookie
-                setCookie("authorization", data.accessToken, {
-                    path: "/", // Cookie is accessible across the entire site
-                    maxAge: 7 * 24 * 60 * 60, // Cookie valid for 7 days
-                    secure: true, // Set to true if using HTTPS
-                    sameSite: "strict", // Prevent CSRF attacks
-                });
-
-                // Redirect to the main page
-                navigate("/main");
+                navigate("/main"); // Redirect to the main page
             } else {
                 const errorData = await response.json();
-                setErrorMessage(errorData.detail || "Login Failed.");
+                setErrorMessage(errorData.message || "Login Failed.");
             }
         } catch (error) {
+            console.error("Error during login:", error);
             setErrorMessage("An error occurred. Please try again.");
         }
     };
@@ -97,7 +94,7 @@ function Login() {
                         </div>
                         
                         <h2 className="div7">Log in to BudgetAI</h2>
-                        <GoogleSignUp setErrorMessage={setErrorMessage} setCookie={setCookie} />
+                        <GoogleSignUp setErrorMessage={setErrorMessage} />
 
                         <div className="divider">
                             <span>OR</span>

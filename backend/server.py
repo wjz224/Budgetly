@@ -4,6 +4,7 @@ from routes.auth.google_signup import router as google_signup_router
 from routes.auth.register import router as register_router
 from routes.auth.login import router as login_router
 from routes.auth.valid_user import router as valid_user_router
+from routes.auth.refresh_token import router as refresh_token_router
 from route_utilities.initialize_firebase import initialize_firebase
 
 # Load Models:
@@ -37,6 +38,7 @@ app.include_router(google_signup_router, tags=["Google Signup"])
 app.include_router(register_router, tags=["Register"])
 app.include_router(login_router,  tags=["Login"])
 app.include_router(valid_user_router,  tags=["Validate User"])
+app.include_router(refresh_token_router, tags=["Refresh Token"])
 
 if __name__ == "__main__":
     import uvicorn

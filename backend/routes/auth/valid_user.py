@@ -14,19 +14,24 @@ async def validate_token(request: Request):
     refreshToken = request.cookies.get("refreshToken")
     # # The JWT/Session token is passed in the headers as "authorization"
     accessToken = headers.get("authorization")
-
+    if not accessToken:
+        raise HTTPException(status_code=401, detail="No authorization header")
+        
+    print("Access Token: ", accessToken)
     try:
         user = auth.verify_id_token(accessToken)
-   
+
         # If it is valid, return status code 200 and a success message.
         return JSONResponse(
             status_code=200,
             content={
                 "status": "success",
                 "message": "Token is valid",
+                "user": user.get("email"),
             },
         )
     except Exception:
+        print("Invalid Token")
         # If it is not valid, return an exception status code 400 and a message saying the token is invalid.
         raise HTTPException(
             status_code=400,

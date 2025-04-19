@@ -9,23 +9,26 @@ import BudgetPage from './components/BudgetPage';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'; // Import useLocation
 import { CookiesProvider } from 'react-cookie'; // Import CookiesProvider
 import Error from  './components/Error'
+import {useAuth, AuthProvider} from './components/AuthContext'; // Import useAuth
 function AppContent() {
   const location = useLocation(); // Get the current route
+  const {user, accessToken} = useAuth(); // Access the accessToken from AuthContext
 
   return (
     <div className="App">
       {/* Conditionally render Navbar */}
-      {(location.pathname === '/register' ||  location.pathname === '/' || location.pathname === '/login') && <Navbar />}
-      <Routes>
-        <Route path="/" element={<Home />} /> 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/main" element={<Main />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/budgets" element={<BudgetPage />} />
-        {/* Redirect unknown routes to a fallback (e.g., Home or 404 page) */}
-        <Route path="*" element={<Error />}/>
-      </Routes> 
+        {(user || !accessToken) && (location.pathname === '/register' ||  location.pathname === '/' || location.pathname === '/login') && <Navbar />}
+        <Routes>
+          <Route path="/" element={<Home />} /> 
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/main" element={<Main />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/budgets" element={<BudgetPage />} />
+          {/* Redirect unknown routes to a fallback (e.g., Home or 404 page) */}
+          <Route path="*" element={<Error />}/>
+        </Routes> 
+     
     </div>
   );
 }
@@ -33,9 +36,11 @@ function AppContent() {
 function App() {
   return (
     <CookiesProvider> {/* Wrap the app in CookiesProvider */}
-      <Router>
-        <AppContent /> {/* Move useLocation inside the Router context */}
-      </Router>
+      <AuthProvider>
+        <Router>
+          <AppContent /> {/* Move useLocation inside the Router context */}
+        </Router>
+      </AuthProvider>
     </CookiesProvider>
   );
 }
