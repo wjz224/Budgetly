@@ -31,7 +31,7 @@ async def login_token(user: LoginSchema):
         # Extract the idToken which is the JWT/sessionToken for the users session 
         accessToken = user["idToken"]
         refresh_token = user["refreshToken"]
-        print(refresh_token)
+        
         # Return a JSON response with the token and a success message.
         response = JSONResponse(
             status_code=200,

@@ -22,7 +22,7 @@ function Login() {
             }
             const isAuthenticated = await checkAuth(accessToken); // Call checkAuth with the cookie
             if (isAuthenticated) {
-                navigate("/main"); // Redirect to main page if authenticated
+                navigate("/dashboard"); // Redirect to main page if authenticated
                 console.log("Authenticated, redirecting to main page...");
             } else {
                 setIsLoading(false); // Stop loading if not authenticated
@@ -52,7 +52,6 @@ function Login() {
     const signInWithPassAndEmail = async (e) => {
         e.preventDefault(); // Prevent form submission reload
         try {
-            console.log("Email:", formData.email, "Password:", formData.password); // Debugging
             const response = await fetch("https://127.0.0.1:8000/login", {
                 method: "POST",
                 credentials: "include",

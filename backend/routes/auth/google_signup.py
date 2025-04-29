@@ -6,9 +6,10 @@ backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(backend_dir)
 
 from fastapi import APIRouter, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from firebase_admin import auth
 from models.User import User 
+from datetime import timedelta
 
 router = APIRouter()
 # Google Authentication Route
@@ -24,8 +25,10 @@ async def google_signup(request: Request):
         #}
         body = await request.json()
         id_token = body.get("idToken")
+        refresh_token = body.get("refreshToken")
+
         # If the ID Token is missing
-        if not id_token:
+        if not id_token or not refresh_token:
             raise HTTPException(status_code=400, detail="ID Token is missing")
         # Verify the ID Token using Firebase Admin SDK
         decoded_token = auth.verify_id_token(id_token)
@@ -39,7 +42,8 @@ async def google_signup(request: Request):
             # Therefore we need to insert the user into our database.
             User.insert_user(uid, email)
         
-        # Return the id_token as the response to the client to save in their cookies.
+        print(id_token)
+        # Set the refresh token in an HTTP-only cookie
         return JSONResponse(
             status_code=200,
             content={
@@ -48,6 +52,17 @@ async def google_signup(request: Request):
                 "token": id_token,
             },
         )
+        response.set_cookie(
+            key="refreshToken",
+            value=refresh_token,
+            httponly=True,
+            secure=True,  # Use secure cookies in production
+            samesite="None",  # Adjust according to your needs
+            path="/",  # Make the cookie available to all routes
+            domain="127.0.0.1",  # Adjust for your domain
+            max_age=30 * 24 * 60 * 60,  # Set cookie expiration (e.g., 30 days)
+        )
+        return response
     except Exception as e:
         # If there is an error with the google sign in, return status_code 400 and the error message.
         raise HTTPException(status_code=400, detail=f"Invalid Google Sign in: {str(e)}")

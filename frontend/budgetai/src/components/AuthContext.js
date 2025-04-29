@@ -13,16 +13,23 @@ export const AuthProvider = ({ children }) => {
         credentials: "include", // send refreshToken cookie
       });
 
-      if (!res.ok) throw new Error("Token refresh failed");
-      const data = await res.json();
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setAccessToken(data.accessToken);
-      await fetchUser(data.accessToken); // Fetch user on first render if no access token
-    } catch (err) {
-      console.error("Failed to refresh token", err);
-      setUser(null);
-      setAccessToken(null);
-      setLoading(false); // Stop loading if token refresh fails
+      if (!res.ok || res.status === 201) {
+        setUser(null); // Clear user if token refresh fails
+        setAccessToken(null); // Clear access token if refresh fails
+        setLoading(false); // Stop loading if token refresh fails
+        return;
+      }
+      else{
+        const data = await res.json();
+        await new Promise(resolve => setTimeout(resolve, 1250));
+        setAccessToken(data.accessToken);
+        await fetchUser(data.accessToken); // Fetch user on first render if no access token
+      }
+    } catch(err){
+      console.error("Error in refreshToken:", err);
+    }
+    finally {
+      setLoading(false); // Stop loading after token refresh attempt
     }
   }
 

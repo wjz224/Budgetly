@@ -28,7 +28,7 @@ function Register() {
             
             const isAuthenticated = await checkAuth(accessToken); // Call checkAuth with the access token
             if (isAuthenticated) {
-                navigate("/main"); // Redirect to main page if authenticated
+                navigate("/dashboard"); // Redirect to main page if authenticated
             } else {
                 setIsLoading(false); // Stop loading if not authenticated
             }

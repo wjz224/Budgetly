@@ -11,7 +11,12 @@ async def refresh_token(request: Request):
         # Retrieve refresh token from HttpOnly cookie
         refresh_token = request.cookies.get("refreshToken")
         if not refresh_token:
-            raise HTTPException(status_code=401, detail="Missing refresh token")
+            return JSONResponse(
+                status_code=201,
+                content={
+                    "accessToken": None
+                },
+        )
 
         # Use Pyrebase to refresh the token
         user = firebase.auth().refresh(refresh_token)
