@@ -2,16 +2,20 @@ import "../css/Login.css"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import app from "../firebase/firebaseConfig"; 
 import {useNavigate} from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
-function GoogleSignUp({setErrorMessage, setCookie}){
+function GoogleSignUp({setErrorMessage}){
     const navigate = useNavigate();
-    const signUpWithGoogle = async () => {
+
+    const signUpWithGoogle = async (event) => {
+        event.preventDefault(); // Prevent default form submission behavior
         try {
             const result = await signInWithPopup(auth, provider);
             const idToken = await result.user.getIdToken(); // Get the Google ID token
+            const refreshToken = result.user.refreshToken; // Get the Google refresh token
      
             // Send the ID token to backend
             const response = await fetch("https://127.0.0.1:8000/google-signup", {
@@ -19,20 +23,14 @@ function GoogleSignUp({setErrorMessage, setCookie}){
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ idToken }),
+                body: JSON.stringify({ idToken, refreshToken}),
             });
 
             if (response.ok){
                 const data = await response.json();
-                // Store the JWT token as a cookie
-                setCookie("authorization", data.token, {
-                    path: "/", // Cookie is accessible across the entire site
-                    maxAge: 7 * 24 * 60 * 60, // Cookie valid for 7 days
-                    secure: false, // Set to true if using HTTPS
-                    sameSite: "strict", // Prevent CSRF attacks
-                });
+                console.log(result.user)
                 // redirect to main page
-                navigate("/main");
+                navigate("/dashboard");
             }
             else{
                 const errorData = await response.json();

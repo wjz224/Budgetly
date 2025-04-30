@@ -3,12 +3,13 @@ import "../css/LoginShared.css"
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleSignUp from "./GoogleSignUp";
-import { useCookies } from "react-cookie";
 import checkAuth from "../utils/checkAuth"; // Import the checkAuth function
+import {useAuth} from "./AuthContext"; // Import useAuth
+import { useCookies } from "react-cookie";
 
 function Register() {
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies(["authorization"]);
+    const {accessToken, loading} = useAuth();
     const [isLoading, setIsLoading] = useState(true); // Add a loading state
     const [formData, setFormData] = useState({
         email: "",
@@ -20,20 +21,23 @@ function Register() {
     // Check authentication status on component mount
     useEffect(() => {
         const verifyAuth = async () => {
-            const isAuthenticated = await checkAuth(cookies.authorization); // Call checkAuth with the cookie
+            if (!accessToken) {
+                setIsLoading(false); // Stop loading if no access token
+                return;
+            }
+            
+            const isAuthenticated = await checkAuth(accessToken); // Call checkAuth with the access token
             if (isAuthenticated) {
-                navigate("/main"); // Redirect to main page if authenticated
+                navigate("/dashboard"); // Redirect to main page if authenticated
             } else {
                 setIsLoading(false); // Stop loading if not authenticated
             }
         };
-
-        if (cookies.authorization !== undefined) {
+        if (!loading){
             verifyAuth();
-        } else {
-            setIsLoading(false); // Stop loading if no cookie is present
         }
-    }, [cookies.authorization, navigate]);
+
+    }, [accessToken, loading, navigate]); // Add accessToken to the dependency array
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
