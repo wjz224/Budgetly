@@ -30,7 +30,7 @@ function GoogleSignUp({setErrorMessage}){
                 const data = await response.json();
                 console.log(result.user)
                 // redirect to main page
-                navigate("/main");
+                navigate("/dashboard");
             }
             else{
                 const errorData = await response.json();

@@ -14,7 +14,7 @@ function Home() {
         const verifyAuth = async () => {
             const isAuthenticated = await checkAuth(useAuth.accessToken); // Call checkAuth with the cookie
             if (isAuthenticated) {
-                navigate("/main"); // Redirect to main page if authenticated
+                navigate("/dashboard"); // Redirect to main page if authenticated
             } else {
                 setIsLoading(false); // Stop loading if not authenticated
             }

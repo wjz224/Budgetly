@@ -7,7 +7,7 @@ function Dashboard() {
         // Add sign-out logic here
         console.log("User signed out");
     };
-
+    
     return (
         <div className="dashboard-container">
             <Sidebar onSignOut={handleSignOut} />

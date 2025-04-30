@@ -10,6 +10,9 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import { CookiesProvider } from 'react-cookie'; // Import CookiesProvider
 import Error from  './components/Error'
 import {useAuth, AuthProvider} from './components/AuthContext'; // Import useAuth
+import ProtectedRoute from "./utils/ProtectedRoute"; 
+
+
 function AppContent() {
   const location = useLocation(); // Get the current route
   const {user, accessToken} = useAuth(); // Access the accessToken from AuthContext
@@ -23,8 +26,8 @@ function AppContent() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/main" element={<Main />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/budgets" element={<BudgetPage />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/budgets" element={<ProtectedRoute><BudgetPage /></ProtectedRoute>} />
           {/* Redirect unknown routes to a fallback (e.g., Home or 404 page) */}
           <Route path="*" element={<Error />}/>
         </Routes> 
