@@ -1,10 +1,10 @@
-import "../css/Login.css";
-import "../css/LoginShared.css"
+import "../../css/Login.css";
+import "../../css/LoginShared.css"
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleSignUp from "./GoogleSignUp";
-import checkAuth from "../utils/checkAuth";
-import {useAuth} from "./AuthContext"; 
+import GoogleSignUp from "./utils/GoogleSignUp"; // Corrected path
+import checkAuth from "./utils/checkAuth"; // Corrected path
+import { useAuth } from "./utils/AuthContext"; // Corrected path
 function Login() {
     const navigate = useNavigate();
     const {accessToken, loading} = useAuth(); // Access the accessToken from AuthContext
@@ -67,7 +67,7 @@ function Login() {
             if (response.ok) {
                 const data = await response.json();
                 setErrorMessage("");
-                navigate("/main"); // Redirect to the main page
+                navigate("/dashboard"); // Redirect to the main page
             } else {
                 const errorData = await response.json();
                 setErrorMessage(errorData.message || "Login Failed.");

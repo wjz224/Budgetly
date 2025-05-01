@@ -1,9 +1,4 @@
-import React from 'react';
-import Sidebar from './Web/Sidebar';
-import '../css/Dashboard.css';
-
-function Budgets() {
-
+function CreateBudget(){
     return (
         <div className="dashboard-container">
             <Sidebar />
@@ -21,4 +16,4 @@ function Budgets() {
     );
 }
 
-export default Budgets;
+export default CreateBudget;

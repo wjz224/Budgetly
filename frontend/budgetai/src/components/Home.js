@@ -2,8 +2,8 @@ import "../css/Home.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import checkAuth from "../utils/checkAuth"; // Import the checkAuth function
-import { useAuth } from "./AuthContext"; 
+import checkAuth from "./Authentication/utils/checkAuth"; // Corrected path
+import { useAuth } from "./Authentication/utils/AuthContext"; // Corrected path
 
 function Home() {
     const navigate = useNavigate();
