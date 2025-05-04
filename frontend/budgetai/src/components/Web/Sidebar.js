@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDashboard, MdAttachMoney, MdBarChart, MdChat, MdSettings, MdAccountCircle } from 'react-icons/md';
-import '../css/Dashboard.css';
+import '../../css/Dashboard.css';
 
 function Sidebar({ onSignOut }) {
     const [showDropdown, setShowDropdown] = useState(false);

@@ -1,0 +1,36 @@
+# FastAPI for building the API
+fastapi==0.95.2
+
+# Uvicorn for running the FastAPI server
+uvicorn[standard]==0.22.0
+
+# SQLAlchemy for database ORM
+sqlalchemy==1.4.46
+
+# PyJWT for token handling (used by Firebase Admin SDK)
+pyjwt==2.6.0
+
+# Firebase Admin SDK for interacting with Firebase
+firebase-admin==6.1.0
+
+# Pyrebase for Firebase authentication
+pyrebase4==4.5.0
+
+# Python dotenv for loading environment variables
+python-dotenv==1.0.0
+
+# Psycopg2 for PostgreSQL database connection
+psycopg2-binary==2.9.6
+
+# Pydantic for data validation
+pydantic==1.10.7
+
+# PyPDF2 for PDF handling (used in main.py)
+pypdf2==3.0.1
+
+# OpenAI for interacting with OpenAI API (used in main.py)
+openai==0.27.8
+
+# Testing dependencies
+pytest==7.4.0
+pytest-asyncio==0.21.0

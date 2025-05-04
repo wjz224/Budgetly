@@ -1,15 +1,15 @@
-import "../css/Register.css";
-import "../css/LoginShared.css"
+import "../../css/Register.css";
+import "../../css/LoginShared.css";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleSignUp from "./GoogleSignUp";
-import checkAuth from "../utils/checkAuth"; // Import the checkAuth function
-import {useAuth} from "./AuthContext"; // Import useAuth
+import GoogleSignUp from "./utils/GoogleSignUp"; // Updated path
+import checkAuth from "./utils/checkAuth"; 
+import { useAuth } from "./utils/AuthContext"; // Updated path
 import { useCookies } from "react-cookie";
 
 function Register() {
     const navigate = useNavigate();
-    const {accessToken, loading} = useAuth();
+    const { accessToken, loading } = useAuth();
     const [isLoading, setIsLoading] = useState(true); // Add a loading state
     const [formData, setFormData] = useState({
         email: "",
@@ -25,7 +25,7 @@ function Register() {
                 setIsLoading(false); // Stop loading if no access token
                 return;
             }
-            
+
             const isAuthenticated = await checkAuth(accessToken); // Call checkAuth with the access token
             if (isAuthenticated) {
                 navigate("/dashboard"); // Redirect to main page if authenticated
@@ -33,10 +33,9 @@ function Register() {
                 setIsLoading(false); // Stop loading if not authenticated
             }
         };
-        if (!loading){
+        if (!loading) {
             verifyAuth();
         }
-
     }, [accessToken, loading, navigate]); // Add accessToken to the dependency array
 
     const handleInputChange = (e) => {
@@ -71,7 +70,6 @@ function Register() {
             } else {
                 setMessages({ error: data.detail || "Registration failed.", success: "" });
             }
-
         } catch (error) {
             setMessages({ error: "An error occurred. Please try again.", success: "" });
         } finally {
