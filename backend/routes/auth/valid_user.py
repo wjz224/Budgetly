@@ -28,6 +28,7 @@ async def validate_token(request: Request):
                 "status": "success",
                 "message": "Token is valid",
                 "user": user.get("email"),
+                "uid": user.get("uid"),
             },
         )
     except Exception:
