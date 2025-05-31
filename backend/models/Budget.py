@@ -11,7 +11,7 @@ class Budget(Base):
     UserID = Column(String, ForeignKey('users.UserID'), nullable=False)
     BudgetName = Column(String, nullable=False)
     CreatedAt = Column(DateTime, default=func.now())
-
+    BudgetAmount = Column(Integer, nullable= False)  # Optional budget amount
     user = relationship("User", back_populates="budgets")
     transactions = relationship("Transaction", back_populates="budget")
     # Select Cateogires from Budget 
