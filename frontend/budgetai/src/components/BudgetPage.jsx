@@ -10,7 +10,7 @@ function Budgets() {
             <main className="dashboard-main-content">
                 <div className="page-header">
                     <h2>Budgets</h2>
-                    <button className="create-budget-button">
+                    <button>
                         New Budget
                     </button>
                 </div>
