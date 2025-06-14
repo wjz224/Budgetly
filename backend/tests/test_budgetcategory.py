@@ -23,11 +23,11 @@ class TestBudgetCategory(unittest.TestCase):
             Base.metadata.create_all(bind=self.engine)  # Create tables for testing
 
             # Insert a test user into the database
-            User.insert_user("1","testuser@example.com")
+            User.insert_user("1", "testuser@example.com")
             self.test_user = self.session.query(User).filter_by(Email="testuser@example.com").first()
 
             # Insert a test budget for the user
-            Budget.insert_budget(self.test_user.UserID, "test_budget")
+            Budget.insert_budget(self.test_user.UserID, "test_budget", 500)  # Add BudgetAmount
             self.test_budget = self.session.query(Budget).filter_by(UserID=self.test_user.UserID).first()
 
             # Insert a test category

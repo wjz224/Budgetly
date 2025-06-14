@@ -16,16 +16,15 @@ function GoogleSignUp({setErrorMessage}){
             const result = await signInWithPopup(auth, provider);
             const idToken = await result.user.getIdToken(); // Get the Google ID token
             const refreshToken = result.user.refreshToken; // Get the Google refresh token
-     
             // Send the ID token to backend
             const response = await fetch("https://127.0.0.1:8000/google-signup", {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ idToken, refreshToken}),
             });
-
             if (response.ok){
                 const data = await response.json();
                 console.log(result.user)

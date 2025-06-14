@@ -41,9 +41,9 @@ async def google_signup(request: Request):
         if existing_user is None:
             # Therefore we need to insert the user into our database.
             User.insert_user(uid, email)
-    
+ 
         # Set the refresh token in an HTTP-only cookie
-        return JSONResponse(
+        response = JSONResponse(
             status_code=200,
             content={
                 "status": "success",
@@ -61,6 +61,7 @@ async def google_signup(request: Request):
             domain="127.0.0.1",  # Adjust for your domain
             max_age=30 * 24 * 60 * 60,  # Set cookie expiration (e.g., 30 days)
         )
+
         return response
     except Exception as e:
         # If there is an error with the google sign in, return status_code 400 and the error message.
