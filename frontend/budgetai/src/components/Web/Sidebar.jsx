@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDashboard, MdAttachMoney, MdBarChart, MdChat, MdSettings, MdAccountCircle } from 'react-icons/md';
-import '../../css/Dashboard.css';
+import classes from '../../css/Dashboard.module.css';
 
 function Sidebar({ onSignOut }) {
     const [showDropdown, setShowDropdown] = useState(false);
@@ -11,36 +11,36 @@ function Sidebar({ onSignOut }) {
     };
 
     return (
-        <aside className="dashboard-sidebar">
-            <div className="user-icon-container" onClick={handleUserIconClick}>
-                <MdAccountCircle className="user-icon" />
+        <aside className={classes["dashboard-sidebar"]}>
+            <div className={classes["user-icon-container"]} onClick={handleUserIconClick}>
+                <MdAccountCircle className={classes["user-icon"]} />
                 {showDropdown && (
-                    <div className="user-dropdown">
+                    <div className={classes["user-dropdown"]}>
                         <button onClick={onSignOut}>Sign Out</button>
                     </div>
                 )}
             </div>
 
             <nav>
-                <ul className="dashboard-nav-list">
-                    <li className="dashboard-nav-item">
-                        <Link to="/dashboard" className="dashboard-link">
-                            <MdDashboard className="dashboard-icon" /> Dashboard
+                <ul className={classes["dashboard-nav-list"]}>
+                    <li className={classes["dashboard-nav-item"]}>
+                        <Link to="/dashboard" className={classes["dashboard-link"]}>
+                            <MdDashboard className={classes["dashboard-icon"]} /> Dashboard
                         </Link>
                     </li>
-                    <li className="dashboard-nav-item">
-                        <Link to="/budgets" className="dashboard-link">
-                            <MdDashboard className="dashboard-icon" /> Budgets
+                    <li className={classes["dashboard-nav-item"]}>
+                        <Link to="/budgets" className={classes["dashboard-link"]}>
+                            <MdDashboard className={classes["dashboard-icon"]} /> Budgets
                         </Link>
                     </li>
-                    <li className="dashboard-nav-item">
-                        <MdBarChart className="dashboard-icon" /> Reports
+                    <li className={classes["dashboard-nav-item"]}>
+                        <MdBarChart className={classes["dashboard-icon"]} /> Reports
                     </li>
-                    <li className="dashboard-nav-item">
-                        <MdChat className="dashboard-icon" /> Chat with BudgetAI
+                    <li className={classes["dashboard-nav-item"]}>
+                        <MdChat className={classes["dashboard-icon"]} /> Chat with BudgetAI
                     </li>
-                    <li className="dashboard-nav-item">
-                        <MdSettings className="dashboard-icon" /> Settings
+                    <li className={classes["dashboard-nav-item"]}>
+                        <MdSettings className={classes["dashboard-icon"]} /> Settings
                     </li>
                 </ul>
             </nav>

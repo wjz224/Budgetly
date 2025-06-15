@@ -1,13 +1,13 @@
-import "../../../css/Login.css"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import app from "../../../firebase/firebaseConfig"; 
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import classes from "../../../css/LoginShared.module.css"; // Import the CSS module
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
-function GoogleSignUp({setErrorMessage}){
+function GoogleSignUp({ setErrorMessage, className }) {
     const navigate = useNavigate();
 
     const signUpWithGoogle = async (event) => {
@@ -41,12 +41,16 @@ function GoogleSignUp({setErrorMessage}){
     };
     
     return(
-        <div className="GoogleSignIn">
-            <button type="button" className="GoogleButton" onClick={signUpWithGoogle}>
+        <div className={classes.GoogleSignIn}>
+            <button
+                type="button"
+                className={`${classes.GoogleButton} ${className || ""}`}
+                onClick={signUpWithGoogle}
+            >
                 <img
-                    src="/Google-symbol.png"
+                    src="/google-symbol.png"
                     alt="Google Logo"
-                    className="GoogleLogo"
+                    className={classes.GoogleLogo}
                 />
                 Google
             </button>

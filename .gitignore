@@ -7,4 +7,6 @@ cert.pem
 install-key.pem
 install.pem
 key.pem
-
+./frontend/budgetai/dist
+./frontend/budgetai/build
+./frontend/budgetai/node_modules

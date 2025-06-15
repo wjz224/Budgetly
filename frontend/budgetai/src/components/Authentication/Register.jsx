@@ -1,16 +1,15 @@
-import "../../css/Register.css";
-import "../../css/LoginShared.css";
+import classes from "../../css/LoginShared.module.css";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleSignUp from "./utils/GoogleSignUp"; // Updated path
-import checkAuth from "./utils/checkAuth"; 
-import { useAuth } from "./utils/AuthContext"; // Updated path
+import GoogleSignUp from "./utils/GoogleSignUp";
+import checkAuth from "./utils/checkAuth";
+import { useAuth } from "./utils/AuthContext";
 import { useCookies } from "react-cookie";
 
 function Register() {
     const navigate = useNavigate();
     const { accessToken, loading } = useAuth();
-    const [isLoading, setIsLoading] = useState(true); // Add a loading state
+    const [isLoading, setIsLoading] = useState(true);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -18,25 +17,23 @@ function Register() {
     });
     const [messages, setMessages] = useState({ success: "", error: "" });
 
-    // Check authentication status on component mount
     useEffect(() => {
         const verifyAuth = async () => {
             if (!accessToken) {
-                setIsLoading(false); // Stop loading if no access token
+                setIsLoading(false);
                 return;
             }
-
-            const isAuthenticated = await checkAuth(accessToken); // Call checkAuth with the access token
+            const isAuthenticated = await checkAuth(accessToken);
             if (isAuthenticated) {
-                navigate("/dashboard"); // Redirect to main page if authenticated
+                navigate("/dashboard");
             } else {
-                setIsLoading(false); // Stop loading if not authenticated
+                setIsLoading(false);
             }
         };
         if (!loading) {
             verifyAuth();
         }
-    }, [accessToken, loading, navigate]); // Add accessToken to the dependency array
+    }, [accessToken, loading, navigate]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -45,16 +42,15 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true); // Start loading when the form is submitted
+        setIsLoading(true);
 
         if (formData.password !== formData.confirmPassword) {
             setMessages({ error: "Passwords do not match.", success: "" });
-            setIsLoading(false); // Stop loading if validation fails
+            setIsLoading(false);
             return;
         }
 
         try {
-            // Send registration data to the backend
             const response = await fetch("https://127.0.0.1:8000/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -73,28 +69,27 @@ function Register() {
         } catch (error) {
             setMessages({ error: "An error occurred. Please try again.", success: "" });
         } finally {
-            setIsLoading(false); // Stop loading after the request is complete
+            setIsLoading(false);
         }
     };
 
-    // Show a loading spinner or placeholder while checking authentication or submitting the form
     if (isLoading) {
-        return <div>Loading...</div>; // Replace with a spinner or loading animation if desired
+        return <div>Loading...</div>;
     }
 
     return (
-        <div className="BudgetAI">
+        <div>
             <main>
-                <section className="section">
-                    <form className="form" onSubmit={handleSubmit}>
-                        <div className="logo-container">
-                            <img src="/logo.png" alt="Logo" className="logo" />
+                <section className={classes.section}>
+                    <form className={classes.form} onSubmit={handleSubmit}>
+                        <div className={classes["logo-container"]}>
+                            <img src="/logo.png" alt="Logo" className={classes.logo} />
                         </div>
 
-                        <h2 className="div7">Create your account</h2>
-                        <GoogleSignUp className="googleButton" />
+                        <h2 className={classes.div7}>Create your account</h2>
+                        <GoogleSignUp className={classes.googleButton} />
 
-                        <div className="divider">
+                        <div className={classes.divider}>
                             <span>OR</span>
                         </div>
 
@@ -104,7 +99,7 @@ function Register() {
                                 id="email"
                                 name="email"
                                 placeholder="Email address"
-                                className="input"
+                                className={classes.input}
                                 value={formData.email}
                                 onChange={handleInputChange}
                                 required
@@ -117,7 +112,7 @@ function Register() {
                                 id="password"
                                 name="password"
                                 placeholder="Password"
-                                className="input"
+                                className={classes.input}
                                 value={formData.password}
                                 onChange={handleInputChange}
                                 required
@@ -131,7 +126,7 @@ function Register() {
                                 id="confirmPassword"
                                 name="confirmPassword"
                                 placeholder="Confirm password"
-                                className="input"
+                                className={classes.input}
                                 value={formData.confirmPassword}
                                 onChange={handleInputChange}
                                 required
@@ -142,11 +137,11 @@ function Register() {
                         {messages.error && <p className="error">{messages.error}</p>}
                         {messages.success && <p className="success">{messages.success}</p>}
 
-                        <div className="buttons">
-                            <button type="submit" className="button1">
+                        <div className={classes.buttons}>
+                            <button type="submit" className={classes.button1}>
                                 Sign Up
                             </button>
-                            <Link to="/login" className="button2">
+                            <Link to="/login" className={classes.button2}>
                                 Already have an account? Login
                             </Link>
                         </div>

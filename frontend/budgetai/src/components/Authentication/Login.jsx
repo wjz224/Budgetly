@@ -1,40 +1,33 @@
-import "../../css/Login.css";
-import "../../css/LoginShared.css"
+import classes from "../../css/LoginShared.module.css";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleSignUp from "./utils/GoogleSignUp"; // Corrected path
-import checkAuth from "./utils/checkAuth"; // Corrected path
-import { useAuth } from "./utils/AuthContext"; // Corrected path
+import GoogleSignUp from "./utils/GoogleSignUp";
+import checkAuth from "./utils/checkAuth";
+import { useAuth } from "./utils/AuthContext";
+
 function Login() {
     const navigate = useNavigate();
-    const {accessToken, loading} = useAuth(); // Access the accessToken from AuthContext
+    const { accessToken, loading } = useAuth();
     const [errorMessage, setErrorMessage] = useState("");
-    const [isLoading, setIsLoading] = useState(true); // Add a loading state
-    
-    // Check authentication status on component mount
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         const verifyAuth = async () => {
             if (!accessToken) {
-                if (!loading) {
-                    setIsLoading(false); // Stop loading if no access token
-                }
+                if (!loading) setIsLoading(false);
                 return;
             }
-            const isAuthenticated = await checkAuth(accessToken); // Call checkAuth with the cookie
+            const isAuthenticated = await checkAuth(accessToken);
             if (isAuthenticated) {
-                navigate("/dashboard"); // Redirect to main page if authenticated
-                console.log("Authenticated, redirecting to main page...");
+                navigate("/dashboard");
             } else {
-                setIsLoading(false); // Stop loading if not authenticated
+                setIsLoading(false);
             }
         };
-        if (loading !== undefined && !loading){
-            console.log("Loading", loading)
+        if (loading !== undefined && !loading) {
             verifyAuth();
         }
-
-    }, [accessToken, loading, navigate]); // Add accessToken and navigate to dependencies
-
+    }, [accessToken, loading, navigate]);
 
     const [formData, setFormData] = useState({
         email: "",
@@ -50,7 +43,7 @@ function Login() {
     };
 
     const signInWithPassAndEmail = async (e) => {
-        e.preventDefault(); // Prevent form submission reload
+        e.preventDefault();
         try {
             const response = await fetch("https://127.0.0.1:8000/login", {
                 method: "POST",
@@ -65,47 +58,42 @@ function Login() {
             });
 
             if (response.ok) {
-                const data = await response.json();
+                await response.json();
                 setErrorMessage("");
-                navigate("/dashboard"); // Redirect to the main page
+                navigate("/dashboard");
             } else {
                 const errorData = await response.json();
                 setErrorMessage(errorData.message || "Login Failed.");
             }
         } catch (error) {
-            console.error("Error during login:", error);
             setErrorMessage("An error occurred. Please try again.");
         }
     };
 
-    // Show a loading spinner or placeholder while checking authentication
     if (isLoading) {
-        return <div>Loading...</div>; // Replace with a spinner or loading animation if desired
+        return <div>Loading...</div>;
     }
 
     return (
-        <div className="Login">
+        <div>
             <main>
-                <section className="section">
-                    <form className="form">
-                        <div className="logo-container">
-                            <img src="/logo.png" alt="Logo" className="logo" />
+                <section className={classes.section}>
+                    <form className={classes.form}>
+                        <div className={classes["logo-container"]}>
+                            <img src="/logo.png" alt="Logo" className={classes.logo} />
                         </div>
-                        
-                        <h2 className="div7">Log in to BudgetAI</h2>
-                        <GoogleSignUp setErrorMessage={setErrorMessage} />
-
-                        <div className="divider">
+                        <h2 className={classes.div7}>Log in to BudgetAI</h2>
+                        <GoogleSignUp setErrorMessage={setErrorMessage} className={classes.GoogleButton} />
+                        <div className={classes.divider}>
                             <span>OR</span>
                         </div>
-
                         <div>
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
                                 placeholder="Email address"
-                                className="input"
+                                className={classes.input}
                                 value={formData.email}
                                 onChange={handleInputChange}
                                 required
@@ -117,18 +105,18 @@ function Login() {
                                 id="password"
                                 name="password"
                                 placeholder="Password"
-                                className="input"
+                                className={classes.input}
                                 value={formData.password}
                                 onChange={handleInputChange}
                                 required
                             />
                         </div>
-                        {errorMessage && <p className="error">{errorMessage}</p>}
-                        <div className="buttons">
-                            <button type="submit" className="button1" onClick={signInWithPassAndEmail}>
+                        {errorMessage && <p className={classes.error}>{errorMessage}</p>}
+                        <div className={classes.buttons}>
+                            <button type="submit" className={classes.button1} onClick={signInWithPassAndEmail}>
                                 Login
                             </button>
-                            <Link to="/register" className="button2">
+                            <Link to="/register" className={classes.button2}>
                                 Sign Up
                             </Link>
                         </div>

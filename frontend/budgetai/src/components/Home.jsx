@@ -1,4 +1,3 @@
-import "../css/Home.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

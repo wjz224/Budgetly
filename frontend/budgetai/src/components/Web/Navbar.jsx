@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../css/Navbar.css"; // Import the new CSS file for the Navbar
+import classes from "../../css/Navbar.module.css"; // Import the CSS module
 
 function Navbar() {
     return (
-        <header className="Navbar">
-            <Link to="/"> {/* Wrap the logo in a Link */}
-                <img src="/logoWhite.png" alt="Logo" className="NavbarLogo" />
+        <header className={classes.Navbar}>
+            <Link to="/" className={classes.NavbarLogo}>
+                <img src="/logoWhite.png" alt="Logo" className={classes.NavbarLogo} />
             </Link>
-            <div className="NavbarButtons">
-                <Link to="/login" className="NavbarButton">Login</Link>
-                <Link to="/register" className="NavbarButton">Sign Up</Link>
+            <div className={classes.NavbarButtons}>
+                <Link to="/login" className={classes.NavbarButton}>Login</Link>
+                <Link to="/register" className={classes.NavbarButton}>Sign Up</Link>
             </div>
         </header>
     );

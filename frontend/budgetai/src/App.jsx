@@ -6,6 +6,7 @@ import Navbar from './components/Web/Navbar'; // Corrected path
 import Main from './components/Main';
 import Dashboard from './components/Dashboard';
 import BudgetPage from './components/BudgetPage';
+import CreateBudget from './components/Budgets/CreateBudget'; // Corrected path
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 import Error from './components/Error';
@@ -27,6 +28,7 @@ function AppContent() {
         <Route path="/main" element={<Main />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/budgets" element={<ProtectedRoute><BudgetPage /></ProtectedRoute>} />
+        <Route path="/createBudget" element={<ProtectedRoute><CreateBudget /></ProtectedRoute>} />
         {/* Redirect unknown routes to a fallback (e.g., Home or 404 page) */}
         <Route path="*" element={<Error />} />
       </Routes>
