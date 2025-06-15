@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import unittest
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy.orm import sessionmaker
 from database import Database
 from models.Category import Category
@@ -25,10 +25,24 @@ class TestTransaction(unittest.TestCase):
 
         # Insert a test user, budget, and category into the database
         print("Inserting test data...")
-        User.insert_user("1","testuser@example.com")
+        User.insert_user("1", "testuser@example.com")
         self.test_user = self.session.query(User).filter_by(Email="testuser@example.com").first()
 
-        Budget.insert_budget(self.test_user.UserID, "Test Budget")
+        # Insert a budget with all required columns
+        self.start_date = datetime.now()
+        self.end_date = self.start_date + timedelta(days=30)
+        self.description = "Test budget description"
+        self.amount = 1000
+        self.currency = "USD"
+        Budget.insert_budget(
+            self.test_user.UserID,
+            "Test Budget",
+            self.amount,
+            self.start_date,
+            self.end_date,
+            self.description,
+            self.currency
+        )
         self.test_budget = self.session.query(Budget).filter_by(UserID=self.test_user.UserID).first()
 
         Category.insert_category("Test Category")
