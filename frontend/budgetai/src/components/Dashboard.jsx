@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from './Web/Sidebar';
-import '../css/Dashboard.css';
+import classes from '../css/Dashboard.module.css';
 
 function Dashboard() {
     const handleSignOut = () => {
@@ -9,10 +9,10 @@ function Dashboard() {
     };
     
     return (
-        <div className="dashboard-container">
+        <div className={classes["dashboard-container"]}>
             <Sidebar onSignOut={handleSignOut} />
-            <main className="dashboard-main-content">
-                <div className="page-header">
+            <main className={classes["dashboard-main-content"]}>
+                <div className={classes["page-header"]}>
                     <h2>Dashboard</h2>
                 </div>
                 <p>Welcome to your dashboard!</p>

@@ -7,6 +7,9 @@ import unittest
 from sqlalchemy.orm import sessionmaker
 from database import Database
 from models.Category import Category
+from models.User import User
+from models.Budget import Budget
+from datetime import datetime, timedelta
 
 class TestCategory(unittest.TestCase):
     def setUp(self):
@@ -15,6 +18,25 @@ class TestCategory(unittest.TestCase):
         self.db.createTables()
         Session = sessionmaker(bind=self.db.engine)
         self.session = Session()
+
+        # Insert a test user and budget for category relationships if needed
+        User.insert_user("1", "testuser@example.com")
+        self.test_user = self.session.query(User).filter_by(Email="testuser@example.com").first()
+        self.start_date = datetime.now()
+        self.end_date = self.start_date + timedelta(days=30)
+        self.description = "Test budget description"
+        self.amount = 1000
+        self.currency = "USD"
+        Budget.insert_budget(
+            self.test_user.UserID,
+            "Test Budget",
+            self.amount,
+            self.start_date,
+            self.end_date,
+            self.description,
+            self.currency
+        )
+        self.test_budget = self.session.query(Budget).filter_by(UserID=self.test_user.UserID).first()
 
     def tearDown(self):
         """Tear down the test database."""

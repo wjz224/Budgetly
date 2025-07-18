@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv, find_dotenv
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes.auth.google_signup import router as google_signup_router
@@ -26,7 +29,7 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://127.0.0.1:3000"],
+    allow_origins=[os.getenv('Client_URL')],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -39,14 +42,6 @@ app.include_router(register_router, tags=["Register"])
 app.include_router(login_router,  tags=["Login"])
 app.include_router(valid_user_router,  tags=["Validate User"])
 app.include_router(refresh_token_router, tags=["Refresh Token"])
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(
-        "server:app",
-        host="127.0.0.1",  # Use a valid hostname or IP address
-        port=8000,         # Specify the port
-        reload=True,       # Enable auto-reload for development
-        ssl_keyfile="../key.pem",  # Path to your private key
-        ssl_certfile="../cert.pem"  # Path to your certificate
-    )
+@app.get("/")
+def read_root():
+    return {"message": "Hello from Vercel!"}

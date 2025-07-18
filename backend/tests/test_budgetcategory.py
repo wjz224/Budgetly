@@ -1,5 +1,6 @@
 import sys
 import os
+from datetime import datetime, timedelta
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -26,8 +27,21 @@ class TestBudgetCategory(unittest.TestCase):
             User.insert_user("1", "testuser@example.com")
             self.test_user = self.session.query(User).filter_by(Email="testuser@example.com").first()
 
-            # Insert a test budget for the user
-            Budget.insert_budget(self.test_user.UserID, "test_budget", 500)  # Add BudgetAmount
+            # Insert a test budget for the user with all required columns
+            self.start_date = datetime.now()
+            self.end_date = self.start_date + timedelta(days=30)
+            self.description = "Test budget description"
+            self.amount = 500
+            self.currency = "USD"
+            Budget.insert_budget(
+                self.test_user.UserID,
+                "test_budget",
+                self.amount,
+                self.start_date,
+                self.end_date,
+                self.description,
+                self.currency
+            )
             self.test_budget = self.session.query(Budget).filter_by(UserID=self.test_user.UserID).first()
 
             # Insert a test category

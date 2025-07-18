@@ -1,4 +1,4 @@
-from sqlalchemy import Column,String, Integer, DateTime, ForeignKey
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.sql import func
 from models.BaseFile import Base
@@ -10,19 +10,31 @@ class Budget(Base):
     BudgetID = Column(Integer, primary_key=True, autoincrement=True)
     UserID = Column(String, ForeignKey('users.UserID'), nullable=False)
     BudgetName = Column(String, nullable=False)
+    BudgetStartDate = Column(DateTime, nullable=False)  # Start date of the budget
+    BudgetEndDate = Column(DateTime, nullable=False)    # End date of the budget
+    BudgetDescription = Column(String, nullable=False)  # Description of the budget
+    Currency = Column(String, nullable=False)           # Currency for the budget
     CreatedAt = Column(DateTime, default=func.now())
-    BudgetAmount = Column(Integer, nullable= False)  # Optional budget amount
+    BudgetAmount = Column(Integer, nullable=False)      # Budget amount
+
     user = relationship("User", back_populates="budgets")
     transactions = relationship("Transaction", back_populates="budget")
-    # Select Cateogires from Budget 
-    categories = relationship("Category", secondary="budgetcategories", back_populates="budgets") 
+    categories = relationship("Category", secondary="budgetcategories", back_populates="budgets")
 
     @classmethod
-    def insert_budget(cls, user_id, name):
+    def insert_budget(cls, user_id, name, amount, start_date, end_date, description, currency):
         Session = sessionmaker(bind=engine)
         session = Session()
         try:
-            new_budget = cls(UserID=user_id, BudgetName=name)
+            new_budget = cls(
+                UserID=user_id,
+                BudgetName=name,
+                BudgetAmount=amount,
+                BudgetStartDate=start_date,
+                BudgetEndDate=end_date,
+                BudgetDescription=description,
+                Currency=currency
+            )
             session.add(new_budget)
             session.commit()
             print(f"Budget for user {user_id} with name '{name}' added successfully.")
@@ -53,15 +65,20 @@ class Budget(Base):
             session.close()
 
     @classmethod
-    def update_budget(cls, budget_id, name):
+    def update_budget(cls, budget_id, name, amount, start_date, end_date, description, currency):
         Session = sessionmaker(bind=engine)
         session = Session()
         try:
             budget = session.query(cls).get(budget_id)
             if budget:
                 budget.BudgetName = name
+                budget.BudgetAmount = amount
+                budget.BudgetStartDate = start_date
+                budget.BudgetEndDate = end_date
+                budget.BudgetDescription = description
+                budget.Currency = currency
                 session.commit()
-                print(f"Budget {budget_id} updated successfully with name '{name}'.")
+                print(f"Budget {budget_id} updated successfully.")
             else:
                 print(f"Budget {budget_id} not found.")
         except Exception as e:
