@@ -4,11 +4,18 @@
   "description": "BudgetAI Frontend",
   "main": "index.js",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Wilson Zheng",
   "license": "ISC",
   "dependencies": {
     "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "vite": "^4.0.0",
+    "@vitejs/plugin-react": "^4.0.0"
   }
 }
