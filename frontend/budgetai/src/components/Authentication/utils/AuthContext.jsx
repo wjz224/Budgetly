@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(null); // In-memory access token
   const refreshToken = async () => {
     try {
-      const res = await fetch("https://127.0.0.1:8000/refresh_token", {
+      const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/refresh_token", {
         method: "POST",
         credentials: "include", // send refreshToken cookie
       });
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async (passedAccessToken) => {
     try {
-      const res = await fetch("https://127.0.0.1:8000/valid_user", {
+      const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/valid_user", {
         method: "GET",
         credentials: "include", // Include HTTP-only cookie for refresh token
         headers: {

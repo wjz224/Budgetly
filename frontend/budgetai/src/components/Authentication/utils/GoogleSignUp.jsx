@@ -17,7 +17,7 @@ function GoogleSignUp({ setErrorMessage, className }) {
             const idToken = await result.user.getIdToken(); // Get the Google ID token
             const refreshToken = result.user.refreshToken; // Get the Google refresh token
             // Send the ID token to backend
-            const response = await fetch("https://127.0.0.1:8000/google-signup", {
+            const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/google-signup", {
                 method: "POST",
                 credentials: "include",
                 headers: {
