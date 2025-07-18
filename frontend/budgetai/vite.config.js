@@ -7,6 +7,7 @@ const isDev = process.env.NODE_ENV === 'development';
 
 export default defineConfig({
     plugins: [react()],
+    base: process.env.VITE_BASE_PATH || '/',
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),
