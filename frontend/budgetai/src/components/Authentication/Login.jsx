@@ -45,7 +45,7 @@ function Login() {
     const signInWithPassAndEmail = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("https://127.0.0.1:8000/login", {
+            const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/login", {
                 method: "POST",
                 credentials: "include",
                 headers: {
