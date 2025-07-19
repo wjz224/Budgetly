@@ -58,6 +58,7 @@ async def google_signup(request: Request):
             secure=True,  # Use secure cookies in production
             samesite="None",  # Adjust according to your needs
             path="/",  # Make the cookie available to all routes
+            # domain= os.getenv('Client_URL'),  # Adjust for your domain
             max_age=30 * 24 * 60 * 60,  # Set cookie expiration (e.g., 30 days)
         )
 
