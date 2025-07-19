@@ -31,7 +31,7 @@ async def google_signup(request: Request):
         if not id_token or not refresh_token:
             raise HTTPException(status_code=400, detail="ID Token is missing")
         # Verify the ID Token using Firebase Admin SDK
-        decoded_token = auth.verify_id_token(id_token, clock_skew_seconds=60) 
+        decoded_token = auth.verify_id_token(id_token) 
         uid = decoded_token["uid"]
         email = decoded_token["email"]
        
