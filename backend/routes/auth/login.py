@@ -49,7 +49,6 @@ async def login_token(user: LoginSchema):
             secure=True,  # Set to True if using HTTPS
             samesite="None",  # Adjust according to your needs
             path="/",  # Make the cookie available to all routes
-            domain= os.getenv('Client_URL'),  # Adjust for your domain
             max_age=7 * 24 * 60 * 60,  # Cookie valid for 7 days
         )
         
