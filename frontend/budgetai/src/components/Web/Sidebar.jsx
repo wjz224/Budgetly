@@ -25,7 +25,7 @@ function Sidebar({ onSignOut }) {
                 <ul className={classes["dashboard-nav-list"]}>
                     <li className={classes["dashboard-nav-item"]}>
                         <Link to="/dashboard" className={classes["dashboard-link"]}>
-                            <MdDashboard className={classes["dashboard-icon"]} /> Dashboard
+                            <MdDashboard className={classes["dashboard-icon"]} /> Home
                         </Link>
                     </li>
                     <li className={classes["dashboard-nav-item"]}>

@@ -10,3 +10,10 @@ key.pem
 ./frontend/budgetai/dist
 ./frontend/budgetai/build
 ./frontend/budgetai/node_modules
+node_modules/
+frontend/node_modules/
+frontend/budgetai/node_modules/
+frontend/budgetai/vite-project/node_modules/
+
+/dist
+node_modules/
