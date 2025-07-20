@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
         const data = await res.json();
         await new Promise(resolve => setTimeout(resolve, 1250));
         setAccessToken(data.accessToken);
+        console.log("Access Token: ", data.accessToken);
         await fetchUser(data.accessToken); // Fetch user on first render if no access token
       }
     } catch(err){
@@ -42,7 +43,6 @@ export const AuthProvider = ({ children }) => {
           authorization: passedAccessToken,
         },
       });
-      console.log("Response from fetchUser", res)
       if (!res.ok) throw new Error("Unauthorized");
 
       const data = await res.json();
@@ -68,6 +68,7 @@ export const AuthProvider = ({ children }) => {
       };
     }
     else{
+      console.log(user)
       setLoading(false); // Stop loading if access token is present
     }
   
