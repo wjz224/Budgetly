@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between; /* Push logo to the left and buttons to the right */
     align-items: center; /* Vertically center the content */
-    height: 10%; /* Navbar takes up 10% of the viewport height */
+    height: 10vh; /* Navbar takes up 10% of the viewport height */
     padding: 0 1rem; /* Add padding for spacing */
     margin-bottom: 1rem;
     position: fixed; /* Make the Navbar fixed at the top */
