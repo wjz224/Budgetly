@@ -1,4 +1,6 @@
 import React, {createContext, useContext, useEffect, useState } from "react";
+import { getAuth, signOut } from "firebase/auth";
+import app from "../../../firebase/firebaseConfig";
 
 const AuthContext = createContext();
 
@@ -54,6 +56,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Logout function
+  const logout = async () => {
+    try {
+      const auth = getAuth(app);
+      await signOut(auth);
+      // Call backend to clear refreshToken cookie
+      await fetch(import.meta.env.VITE_BACKEND_URL + "/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Error signing out:", error);
+    } finally {
+      setUser(null);
+      setAccessToken(null);
+    }
+  };
+
 
   // 🔁 Auto-refresh token every 55 minutes
   useEffect(() => {
@@ -83,6 +103,7 @@ export const AuthProvider = ({ children }) => {
         loading,        // Useful for route guards/loaders
         setUser,
         setAccessToken,
+        logout,         // Add logout to context
       }}
     >
       {loading ? <div>Loading...</div> : children}
