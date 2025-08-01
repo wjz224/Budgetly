@@ -10,7 +10,7 @@ from routes.auth.valid_user import router as valid_user_router
 from routes.auth.refresh_token import router as refresh_token_router
 from routes.auth.logout import router as logout_router
 from routes.budgets.get_budgets import router as get_budgets_router
-
+from routes.budgets.add_budget import router as add_budget_router
 from route_utilities.initialize_firebase import initialize_firebase
 
 # Load Models:
@@ -47,6 +47,7 @@ app.include_router(valid_user_router,  tags=["Validate User"])
 app.include_router(refresh_token_router, tags=["Refresh Token"])
 app.include_router(logout_router, tags=["Logout"])
 app.include_router(get_budgets_router, tags=["Budget"])
+app.include_router(add_budget_router, tags=["Budget"])
 
 @app.get("/")
 def read_root():

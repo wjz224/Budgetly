@@ -17,7 +17,6 @@ async def validate_token(request: Request):
     
     try:
         user = auth.verify_id_token(accessToken)
-
         # If it is valid, return status code 200 and a success message.
         return JSONResponse(
             status_code=200,

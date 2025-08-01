@@ -14,7 +14,7 @@ from datetime import timedelta
 router = APIRouter()
 # Google Authentication Route
 @router.post("/google-signup")
-async def google_signup(request: Request):
+async def google_signup(request: Request):              
     # Try to extract the ID Token from the request body from the Google Authentication Signin
     # The ID Token is returned from the Google Authentication API from Firebase 
     # It is a JWT Token / SessionToken that represents a users' session.
