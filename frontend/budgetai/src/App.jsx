@@ -19,6 +19,7 @@ function AppContent() {
 
   return (
     <div className="App">
+      
       {/* Conditionally render Navbar */}
       {(user || !accessToken) && (location.pathname === '/register' || location.pathname === '/' || location.pathname === '/login') && <Navbar />}
       <Routes>
