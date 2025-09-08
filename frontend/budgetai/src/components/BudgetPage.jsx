@@ -3,6 +3,7 @@ import Sidebar from './Web/Sidebar';
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth } from './Authentication/utils/AuthContext';
+import { NewBudgetDialog } from './NewBudgetDialog';
 import '../css/BudgetPage.css';
 
 function Budgets() {
@@ -198,10 +199,7 @@ function Budgets() {
             <main className="budget-main-content">
                 <div className="page-header">
                     <h2>Budgets</h2>
-                    <Button className="ml-auto">
-                        <span style={{ fontSize: '1.1rem', marginRight: '0.5rem' }}>+</span>
-                        New Budget
-                    </Button>
+                    <NewBudgetDialog />
                 </div>
                 
                 <div className="table-container">
