@@ -74,3 +74,19 @@ class BudgetCategory(Base):
             print(f"Error retrieving BudgetCategory: {e}")
         finally:
             session.close()
+
+    @classmethod
+    def get_category_ids_by_budget_id(cls, budget_id):
+        """
+        Returns a list of CategoryIDs associated with the given BudgetID.
+        """
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        try:
+            categories = session.query(cls.CategoryID).filter_by(BudgetID=budget_id).all()
+            return [c[0] for c in categories]
+        except Exception as e:
+            print(f"Error retrieving category IDs for BudgetID {budget_id}: {e}")
+            return []
+        finally:
+            session.close()
