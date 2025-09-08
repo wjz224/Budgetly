@@ -16,6 +16,7 @@ async def validate_token(request: Request):
         raise HTTPException(status_code=401, detail="No authorization header")
     
     try:
+        print(accessToken)
         user = auth.verify_id_token(accessToken)
         # If it is valid, return status code 200 and a success message.
         return JSONResponse(

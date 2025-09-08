@@ -8,6 +8,7 @@ from engine import engine
 class Transaction(Base):    
     __tablename__ = "transactions"
     TransactionID = Column(Integer, primary_key=True, autoincrement=True)
+    TransactionName = Column(String, nullable=False)
     BudgetID = Column(Integer, ForeignKey('budgets.BudgetID')) 
     Amount = Column(Integer, nullable=False)
     CreatedAt = Column(DateTime, default=func.now())
@@ -17,14 +18,14 @@ class Transaction(Base):
     budget = relationship("Budget", back_populates="transactions")
 
     @classmethod
-    def insert_transaction(cls, budget_id, category_id, amount, created_at):
+    def insert_transaction(cls, transaction_name, budget_id, category_id, amount, created_at):
         Session = sessionmaker(bind=engine)
         session = Session()
         try:
-            new_transaction = cls(BudgetID=budget_id, CategoryID=category_id, Amount=amount, CreatedAt = created_at)
+            new_transaction = cls(TransactionName = transaction_name, BudgetID=budget_id, CategoryID=category_id, Amount=amount, CreatedAt = created_at)
             session.add(new_transaction)
             session.commit()
-            print(f"Transaction for budget {budget_id} with category {category_id} and amount {amount} and createdat {created_at} added successfully.")
+            print(f"Transaction {transaction_name} for budget {budget_id} with category {category_id} and amount {amount} and createdat {created_at} added successfully.")
         except Exception as e:
             session.rollback()
             print(f"Error inserting transaction: {e}")
