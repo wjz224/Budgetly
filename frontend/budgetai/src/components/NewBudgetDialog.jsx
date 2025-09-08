@@ -1,5 +1,5 @@
 "use client";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import { getAuth } from "firebase/auth";
 
 
 export function NewBudgetDialog() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, control, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
     try {
@@ -19,6 +19,13 @@ export function NewBudgetDialog() {
       if (!user) throw new Error("Not authenticated");
 
       const token = await user.getIdToken();
+      
+      // Get the backend URL from environment variables
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+      
+      if (!backendUrl) {
+        throw new Error('Backend URL not configured');
+      }
       
       const payload = {
         name: data.name,
@@ -29,11 +36,14 @@ export function NewBudgetDialog() {
         description: data.description // Now required per your backend
       };
 
-      const response = await fetch("/api/budgets", {
+      console.log("Payload being sent:", payload);
+      console.log("Backend URL:", backendUrl);
+
+      const response = await fetch(`${backendUrl}/budgets`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": token
+          "authorization": token
         },
         body: JSON.stringify(payload)
       });
@@ -106,16 +116,23 @@ export function NewBudgetDialog() {
               <Label htmlFor="currency" className="text-right">
                 Currency*
               </Label>
-              <Select {...register("currency", { required: "Currency is required" })}>
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Select currency" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="USD">USD ($)</SelectItem>
-                  <SelectItem value="EUR">EUR (€)</SelectItem>
-                  <SelectItem value="GBP">GBP (£)</SelectItem>
-                </SelectContent>
-              </Select>
+              <Controller
+                name="currency"
+                control={control}
+                rules={{ required: "Currency is required" }}
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="col-span-3">
+                      <SelectValue placeholder="Select currency" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="USD">USD ($)</SelectItem>
+                      <SelectItem value="EUR">EUR (€)</SelectItem>
+                      <SelectItem value="GBP">GBP (£)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
               {errors.currency && <span className="col-span-4 text-red-500 text-sm">{errors.currency.message}</span>}
             </div>
 
